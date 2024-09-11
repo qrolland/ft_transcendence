@@ -1,0 +1,67 @@
+services:
+    database:
+        container_name: database
+        image: postgresql
+        build: 
+            context: 
+                DB/.
+        expose: 
+            - "5432"
+        # networks:
+        #     - intern
+        env_file:
+            - .env_local
+       
+        healthcheck:
+            test: ["CMD-SHELL", "pg_isready -d $${POSTGRES_DB} -U $${POSTGRES_USER}"]
+            interval: 10s
+            timeout: 30s
+            retries: 5
+            start_period: 10s
+    backend:
+        container_name: backend
+        image: backend
+        build: .
+        ports:
+            - "8888:8888"
+        env_file:
+            - .env_local
+        # networks:
+        #     - intern
+        depends_on:
+            database:
+                condition: service_healthy
+
+
+    # monitoring:
+    #     container_name: prometheus
+    #     image: prometheus
+    #     build: Prometheus/.
+    #     ports:
+    #         - "9090:9090"
+    #     depends_on:
+    #         - backend
+    
+    # cadvisor:
+    #     image: gcr.io/cadvisor/cadvisor:v0.47.0
+    #     ports:
+    #         - "8080:8080"
+    #     volumes:
+    #         - /:/rootfs:ro
+    #         - /var/run:/var/run:rw
+    #         - /sys:/sys:ro
+    #         - /var/lib/docker/:/var/lib/docker:ro
+
+    #         # - /:/rootfs:ro
+    #         # - /run/user/$(id -u)/docker.sock:/var/run/docker.sock:ro 
+    #         # - /sys:/sys:ro 
+    #         # - ~/.local/share/docker/:/var/lib/docker:ro
+    #     devices:
+    #         - /dev/kmsg:/dev/kmsg 
+    #     depends_on:
+    #         - backend
+
+# networks:
+#     intern:
+#         #default driver
+#         driver : bridge

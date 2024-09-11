@@ -1,0 +1,818 @@
+{% load static %}
+
+<div id="new_content">
+	<h3 id="who_is" style="display: none;">{{ user.public_username }}</h3>
+
+	<div id="tournament-div">
+		<div class="row justify-content-center">
+			<h1 id="tournament-title" class="text-center">Tournaments</h1>
+			<div class="w-100"></div>
+			<div class="spacer"></div>
+			<div class="w-100"></div>
+			<div id="tournament-list">
+
+				<table id="tournament_list_wrapper" class="my-tournament-list-table">
+					<thead>
+						<tr>
+							<th>Name</th>
+							<th>Author</th>
+							<th>Created at</th>
+							<th>Players</th>
+							<th>Trust factor</th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody id="content-list-tournament">
+						<!-- <tr>
+						<td>Le super DevJ2K Tournament est la !!!aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</td>
+						<td>DevJ2K</td>
+						<td><i class="fa-regular fa-clock"></i>16/03/2024, 23:23</td>
+						<td><i class="fa-regular fa-user"></i>3</td>
+						<td><i class="fa-solid fa-circle-check"></i>97%</td>
+						<td><button class="join-tournament-btn" onclick="joinTournamentModal()">JOIN</button></td>
+					</tr> -->
+					</tbody>
+				</table>
+
+				<table id="tournament_waiting_room_wrapper" class="tournament-user-list">
+					<thead>
+						<tr>
+							<th>Name</th>
+							<th>Trust factor</th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody id="content-user-list">
+						<!-- <tr>
+						  <td>DevJ2K</td>
+						  <td><i class="fa-solid fa-circle-check"></i>97%</td>
+						  <td><button class="kick-button" onclick="console.log('kick')">KICK</button></td>
+					  </tr> -->
+					</tbody>
+				</table>
+
+				<div id="tournament_running_wrapper" class="row align-items-center" style="display: none;">
+					<div id="bracket" class="col-md-6 offset-md-1 bracket">
+
+					</div>
+				</div>
+
+
+				<button type="button" class="global-tournament-btn refresh-button trmt-btn-main"
+					onclick="reloadTournament()"><i class="fa-solid fa-arrows-rotate"></i></button>
+				<button type="button" class="global-tournament-btn trmt-align-to-center-bottom trmt-btn-main"
+					onclick="createTournamentModal();" data-toggle="modal" data-target="#exampleModal"
+					data-whatever="@fat">CREATE A TOURNAMENT</button>
+
+				<div id="trmt-btn-handling" class="trmt-btn-list trmt-align-to-center-bottom">
+					<button type="button" class="global-tournament-btn" onclick="QuitTournament();">LEAVE THE
+						TOURNAMENT</button>
+					<button id="adminButton" type="button" class="global-tournament-btn adminButton" onclick="StartTournament()"
+						disabled>BEGIN THE TOURNAMENT</button>
+				</div>
+
+				<div id="trmt-btn-playing" class="trmt-align-to-center-bottom">
+					<button type="button" id="button_tournament_running_join"
+									class="global-tournament-btn tournament-button" onclick="joinMatch();">
+									JOIN MATCH
+								</button>
+					<button type="button" id="button_tournament_ff"
+									class="leave-tournament-button tournament-button" onclick="QuitTournament();">
+									LEAVE THE TOURNAMENT
+								</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+<!-- {% block scripts %} -->
+<script type="text/javascript" src="{% static 'js/tournament.js' %}"></script>
+<script>
+	"{% load env_extra %}"
+	var base_url = "{% get_env_var 'BASE_URL_HTTPS' %}";
+	var base_wss = "{% get_env_var 'BASE_URL_WSS' %}";
+	var tournamentName = "123456789";
+	var tournament_data = null;
+	var crsfcookie = readCookie('csrftoken');
+	var tournamentList = null;
+	var admin = false;
+
+	var state_waiting = "waiting";
+	var state_choosing = "choosing";
+	var state_start = "start";
+	var state = state_choosing;
+	var winner_name = null;
+	if (tournament.mode == true){
+		state = state_start;
+	}
+	var username = null;
+	var has_losed = false;
+	var nb_player = 1;
+
+
+// var back_arrow = async () => {
+// 	await QuitTournament();
+// 	window.removeEventListener('popstate', back_arrow);
+// }
+
+
+
+back_arrow = () => {
+	try{
+		QuitTournamentNoAsync();
+	}
+	catch(error){
+		;
+	}
+	window.removeEventListener('popstate', back_arrow);
+	
+}
+
+window.addEventListener('popstate', back_arrow);
+
+	var sleep = ms => new Promise(r => setTimeout(r, ms));
+
+	function DidILose(match, whoami){
+		for (var i = 0; i < match.length; i++){
+
+			if (match[i].loser_name == whoami){
+				has_losed = true;
+				return
+			}
+		}
+	}
+	async function handle_state() {
+
+		try {
+			clearInterval(dotsWaitingIntervalID);
+		}
+		catch (e) {
+			;
+		}
+		// const elm3 = await waitForElm(".tournament-button");
+
+		if (has_losed == false){
+			try{
+				document.getElementById("button_tournament_running_join").disabled = false;
+			}
+			catch (error){
+				;
+			}
+
+		}
+
+		if (tournament.whoami == undefined) {
+			var response = await fetch(base_url + '/whoami');
+			response = await response.json();
+			tournament.whoami = response.username;
+		}
+		const elm = await waitForElm(".adminButton");
+		const elm2 = await waitForElm(".tournament-button");
+		if (tournament.special_state == "opponent_left") {
+			state = state_start;
+			tournament.special_state = "";
+
+			if (tournament.socket_match_was_opened == true && socket != undefined && socket.readyState === WebSocket.OPEN)
+				socket.close();
+			tournament.socket_match_was_opened = false;
+		}
+		// document.getElementById("adminButton").style.display = 'none';
+		if (tournament.state == "start") {
+			state = state_start;
+			tournament.state = "waiting";
+		}
+
+		if (state == state_choosing) {
+			await reloadTournament();
+			// document.getElementById("tournament-title").innerHTML = "Tournaments";
+			document.querySelectorAll('.trmt-btn-main').forEach(function (e) {
+				e.style.display = 'flex';
+			});
+			document.getElementById("trmt-btn-handling").style.display = 'none';
+			document.getElementById("trmt-btn-playing").style.display = 'none';
+			document.getElementById("tournament-list").style.display = 'table';
+			document.getElementById("tournament-list").style.paddingTop = '0px';
+
+
+			document.getElementById("tournament_list_wrapper").style.display = 'block';
+			document.getElementById("tournament_waiting_room_wrapper").style.display = 'none';
+			document.getElementById("tournament_running_wrapper").style.display = 'none';
+		}
+		else if (state == state_waiting) {
+			// document.getElementById("tournament-title").innerHTML = tournament.tournament_name;
+			document.querySelectorAll('.trmt-btn-main').forEach(function (e) {
+				e.style.display = 'none';
+			});
+			document.getElementById("trmt-btn-handling").style.display = 'flex';
+			document.getElementById("trmt-btn-playing").style.display = 'none';
+			document.getElementById("tournament-list").style.display = 'table';
+			document.getElementById("tournament-list").style.paddingTop = '0px';
+
+			document.getElementById("tournament_list_wrapper").style.display = 'none';
+			document.getElementById("tournament_waiting_room_wrapper").style.display = 'block';
+			document.getElementById("tournament_running_wrapper").style.display = 'none';
+
+			if (admin == false) {
+				document.getElementById("adminButton").style.display = 'none';
+			} else {
+				document.getElementById("adminButton").style.display = 'block';
+				if (nb_player > 1) {
+					document.getElementById("adminButton").disabled = false;
+				} else {
+					document.getElementById("adminButton").disabled = true;
+				}
+			}
+		}
+		else if (state == state_start) {
+			// document.getElementById("tournament-title").innerHTML = tournament.tournament_name;
+			document.getElementById("tournament_waiting_room_wrapper").style.display = 'none';
+			document.getElementById("tournament_list_wrapper").style.display = 'none';
+			document.getElementById("tournament-list").style.display = 'flex';
+			document.getElementById("tournament-list").style.paddingTop = '16px';
+
+			document.querySelectorAll('.trmt-btn-main').forEach(function (e) {
+				e.style.display = 'none';
+			});
+			document.getElementById("trmt-btn-handling").style.display = 'none';
+			document.getElementById("trmt-btn-playing").style.display = 'flex';
+
+			document.getElementById("adminButton").style.display = 'none';
+
+			document.getElementById("tournament_running_wrapper").style.display = 'flex';
+			if (has_losed == true) {
+				document.getElementById("button_tournament_running_join").disabled = true;
+				document.getElementById("button_tournament_ff").classList.remove("leave-tournament-button");
+				document.getElementById("button_tournament_ff").classList.add("global-tournament-btn");
+			}
+		}
+	}
+
+	async function reloadTournament() {
+		await getTournamentList();
+		await showTournamentList(tournamentList);
+	}
+
+	async function joinMatch() {
+		if (username == null) {
+
+			var response = await fetch(base_url + '/whoami');
+			username = await response.json();
+			username = username.username;
+		}
+		tournament.whoami = username;
+		if (has_losed == true) {
+			return;
+		}
+		for (var i = 0; i < tournament_data.length; i++) {
+			if ((tournament_data[i]["Player1_name"] == username || tournament_data[i]["Player2_name"] == username)
+				&& tournament_data[i]["winner_name"] == "None" && tournament_data[i]["loser_name"] == "None") {
+				var match_id = tournament_data[i]["match_id"];
+				tournament.match_id = match_id;
+				tournament.started_match = false;
+				tournament.result_sent = false;
+				tournament.player1_name = tournament_data[i]["Player1_name"];
+				tournament.player2_name = tournament_data[i]["Player2_name"];
+				await urlRoute('/ponggame');
+				state = state_start;
+				return;
+			}
+		}
+
+	}
+
+	function getFormatTournamentDate(dateF) {
+		// 20240318155214
+		let formattedDate =
+			dateF.substr(6, 2) + "/" +
+			dateF.substr(4, 2) + "/" +
+			dateF.substr(0, 4) + ", " +
+			dateF.substr(8, 2) + ":" +
+			dateF.substr(10, 2);
+		// + ":" + dateF.substr(12, 2);
+		return formattedDate;
+	}
+
+	async function showTournamentList(tournament_list) {
+		// return ;
+		tournamentList = tournament_list;
+		// let str = "";
+		let div = document.getElementById("content-list-tournament");
+		div.innerHTML = '';
+		if (tournament_list == null) {
+			return;
+		}
+		var nb = 0;
+		for (const i of tournament_list) {
+			// LINE
+			let new_tr = document.createElement('tr');
+
+			// Tournament name
+			let td_tournamentName = document.createElement('td');
+			td_tournamentName.textContent = i.display_name;
+
+			// Tournament author
+			let td_authorName = document.createElement('td');
+			td_authorName.textContent = i.admin.public_username;
+			// td_authorName.textContent = 'Yoooo';
+
+			// Tournament creating time
+			let td_createdTime = document.createElement('td');
+			let td_i1 = document.createElement('i');
+			td_i1.classList.add('fa-regular', 'fa-clock');
+			td_createdTime.append(td_i1);
+			td_createdTime.append(getFormatTournamentDate(i.name.toString()));
+
+			// Tournament numbers users
+			let td_nbUser = document.createElement('td');
+			let td_i2 = document.createElement('i');
+			td_i2.classList.add('fa-regular', 'fa-user');
+			td_nbUser.append(td_i2);
+			td_nbUser.append(i.nb_player);
+
+
+			// Tournament check rate
+			let td_checkRate = document.createElement('td');
+			let td_i3 = document.createElement('i');
+			td_i3.classList.add('fa-solid', 'fa-circle-check');
+			td_checkRate.append(td_i3);
+			td_checkRate.append(i.admin.trust_factor + '%');
+			td_checkRate.style.color =  FindGreenRedColorFromPercentage(i.admin.trust_factor);
+			td_i3.style.color =  FindGreenRedColorFromPercentage(i.admin.trust_factor);
+			let td_joinTournamentBtn = document.createElement('td');
+			let td_jBtn = document.createElement('button');
+			td_jBtn.id = nb;
+			td_jBtn.classList.add('join-tournament-btn');
+			td_jBtn.setAttribute('onclick', 'JoinTournament()');
+			td_jBtn.textContent = 'JOIN';
+			td_joinTournamentBtn.append(td_jBtn);
+
+
+			new_tr.append(
+				td_tournamentName,
+				td_authorName,
+				td_createdTime,
+				td_nbUser,
+				td_checkRate,
+				td_joinTournamentBtn
+			);
+			// str += "<h1>" + i['admin'].public_username + "</h1>";
+			// str += "<button type='button' id='" + nb +  "' class='buttonClassTournamentList my-btn-outlined' onclick=JoinTournament()> ";
+			// str += i["nb_player"] + " player<p></p>name is " + i["name"] + " " + i["display_name"] + "</button>" ;
+			// str += "<div></div>";
+			// nb ++;
+			div.append(new_tr);
+		}
+		// div.innerHTML = str;
+	}
+
+	async function getTournamentList() {
+		var response = await fetch(base_url + "/tournamentList", {
+			method: "GET",
+			credentials: 'same-origin',
+			headers: { 'Content-Type': 'application/json', 'X-CSRFToken': crsfcookie }
+		});
+
+		tournamentList = await response.json();
+
+	}
+
+	async function setTournamentName() {
+		obj = new Object();
+		obj.status = "set_name";
+		obj.new_name = tournamentName;
+		var jsonString = JSON.stringify(obj);
+		tournament.socket_tournament.send(jsonString);
+	}
+	async function handle_message(message) {
+
+		if (message.status == "start") {
+			state = state_start;
+			DidILose(message.message.match, tournament.whoami);
+			await displayTree(message.message);
+			await handle_state();
+		}
+		else if (message.status == "welcome_message") {
+
+			tournament.admin = message.message.admin;
+			display_waiting(message.message);
+		}
+		else if (message.status == "quit_waiting") {
+			display_waiting(message.message);
+			nb_player--;
+			if (nb_player == 1) {
+				document.getElementById("adminButton").disabled = true;
+			}
+		}
+		else if (message.status == "new_user") {
+			document.getElementById('content-user-list').append(add_user_display_waiting({ username: message.message.username, trust_factor : message.message.trust_factor, displayKickButton: true }));
+			nb_player += 1;
+			await handle_state();
+		}
+		else if (message.status == "admin_left" ||
+			message.status == "already_playing" || message.status == "tournament_dont_exist") {
+			if ("/tournament" != popSlash(window.location.pathname)) {
+				urlRoute("/tournament");
+			}
+			if (winner_name != 'TBD'){
+				return;
+			}
+			hideBackNavbar(true);
+			tournament.mode = false;
+			tournament.socket_tournament.close();
+			state = state_choosing;
+			await handle_state();
+			if (message.status == "admin_left") {
+				displayModalAdminLeft();
+			}
+		}
+		else if (message.status == "disconnect_message") {
+			if (tournament.socket_match_was_opened == true) {
+				if (message.next_opponent != tournament.whoami)
+					;
+				else{
+					if ("/tournament" != popSlash(window.location.pathname)) {
+						await urlRoute('/tournament');
+					}
+				}
+			}
+			state = state_start;
+			tournament.special_state = "opponent_left";
+
+			const w = waitForElm(".adminButton");
+			const a = waitForElm(".round");
+			await handle_state();
+			await displayTree(message.message);
+		}
+		else if (message.status == "what_is_name") {
+			await setTournamentName();
+		}
+		else if (message.status == "kick") {
+
+			if (tournament.whoami != message.message)
+				return;
+			state = state_choosing;
+			tournament.socket_tournament.close();
+			await handle_state();
+
+		}
+	}
+
+	// function add_user_display_waiting(username) {
+	// 	return "<li class='list-group-item list-group-item-primary' id=player_username >" + username + "</li>";
+	// }
+
+
+
+	function kickUser(id) {
+		var obj = new Object();
+		obj.status = "kick";
+		obj.username = id;
+		var jsonString = JSON.stringify(obj);
+		tournament.socket_tournament.send(jsonString);
+	}
+
+	function add_user_display_waiting({ username, trust_factor = 0, displayKickButton = false }) {
+
+
+		let new_tr = document.createElement('tr');
+
+		// Player name
+		let td_playerName = document.createElement('td');
+		td_playerName.textContent = username;
+
+
+		// Tournament check rate
+		let td_checkRate = document.createElement('td');
+		let td_i1 = document.createElement('i');
+		td_i1.classList.add('fa-solid', 'fa-circle-check');
+
+		td_i1.style.color = FindGreenRedColorFromPercentage(trust_factor);
+		td_checkRate.append(td_i1);
+		td_checkRate.append(trust_factor);
+		td_checkRate.append('%');
+		td_checkRate.style.color = FindGreenRedColorFromPercentage(trust_factor);
+
+		let td_kickUserBtn = document.createElement('td');
+		let td_jBtn = document.createElement('button');
+		td_jBtn.classList.add('kick-button');
+		td_jBtn.setAttribute('onclick',' kickUser(this.id)');
+		td_jBtn.setAttribute('id',username);
+		td_jBtn.textContent = 'KICK';
+		td_kickUserBtn.append(td_jBtn);
+		if (admin == false) {
+			td_jBtn.style.display = 'none';
+		}
+		if (admin == true && displayKickButton == false) {
+			td_jBtn.style.display = 'none';
+		}
+		new_tr.append(td_playerName, td_checkRate, td_kickUserBtn);
+
+		return new_tr;
+	}
+
+
+	function display_waiting(data) {
+		player = data.player;
+		tournament.tournament_name = data["display_name"]
+		tournament.admin_name = data.admin.public_username;
+
+		let div = document.getElementById('content-user-list');
+		div.innerHTML = '';
+		for (i in player) {
+			if (tournament.whoami == tournament.admin.public_username && tournament.whoami != player[i].public_username){
+				
+				div.append(add_user_display_waiting({ username: player[i].public_username, trust_factor:player[i].trust_factor, displayKickButton: true }));
+			}
+			else{
+				div.append(add_user_display_waiting({ username: player[i].public_username, trust_factor:player[i].trust_factor, displayKickButton: false }));
+			}
+		}
+		// document.getElementById('content-user-list').innerHTML = str;
+	}
+
+
+	async function JoinTournament() {
+		has_losed = false;
+		hideNavbar();
+		tournament.mode = true;
+		var button_number = event.srcElement.id;
+		var tournament_id = tournamentList[button_number]["name"];
+		state = state_waiting;
+		await handle_state();
+
+		url = base_wss + "/tournament/" + tournament_id;
+		tournament.socket_tournament = new WebSocket(url);
+
+		tournament.socket_tournament.addEventListener("message", async (event) => {
+			message = JSON.parse(event.data);
+			await handle_message(message);
+		});
+		return;
+	}
+
+	async function StartTournament() {
+		if (admin == false || nb_player == 1)
+			return;
+		var obj = new Object();
+		obj.status = "start";
+		var jsonString = JSON.stringify(obj);
+		tournament.socket_tournament.send(jsonString);
+	}
+
+	async function CreateTournament() {
+		hideNavbar();
+		has_losed = false;
+		admin = true;
+		tournament.mode = true;
+		state = state_waiting;
+		await handle_state();
+		tournament.socket_tournament = new WebSocket(base_wss + "/tournament/");
+		tournament.socket_tournament.addEventListener("message", async (event) => {
+
+			message = JSON.parse(event.data);
+			await handle_message(message);
+		});
+	}
+
+	function QuitTournamentNoAsync(){
+		displayNavbar();
+		tournament.mode = false;
+		nb_player = 1;
+		state = state_choosing;
+		var obj = new Object();
+		obj.status = "disconnect";
+		var jsonString = JSON.stringify(obj);
+		tournament.socket_tournament.send(jsonString);
+		tournament.socket_tournament.close();
+	}
+
+	async function QuitTournament() {
+		displayNavbar();
+		tournament.mode = false;
+		nb_player = 1;
+		state = state_choosing;
+		var obj = new Object();
+		obj.status = "disconnect";
+		var jsonString = JSON.stringify(obj);
+		tournament.socket_tournament.send(jsonString);
+		tournament.socket_tournament.close();
+		if (admin == true) {
+			await sleep(1000);
+		}
+		admin = false;
+		await handle_state();
+	}
+
+
+	async function displayTree(data) {
+
+		// if (data.status == "start"){
+		// data = JSON.parse(data["message"])
+		// data = data["message"]
+		match = data["match"];
+		winner = data["winner"];
+		// await render(match, winner);
+
+		var fuck = document.getElementById("bracket");
+		await render(match, winner);
+		tournament_data = match;
+	}
+
+	function readCookie(name) {
+		var nameEQ = name + "=";
+		var ca = document.cookie.split(';');
+		for (var i = 0; i < ca.length; i++) {
+			var c = ca[i];
+			while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+			if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+		}
+		return null;
+	}
+
+	function get_max_level(match) {
+		var max_round = 0;
+		for (var i in match) {
+			if (max_round < match[i]["tournament_level"]) {
+				max_round = match[i]["tournament_level"];
+			}
+		}
+		return max_round
+	}
+	function get_next_match_by_round_number(match, round_number) {
+		for (var i in match) {
+			if (match[i]["tournament_level"] == round_number)
+				return i;
+		}
+		return -1;
+	}
+	function remove_match_index(match, index) {
+		match[index]["tournament_level"] = -1;
+		return match;
+	}
+	function print_none() {
+		return "<td class=team>" + "none" + "<p></p>" + "none" + "</td>";
+	}
+	function get_row_span(max_round, round_number) {
+		if (round_number == max_round - 1)
+			return "";
+		return "rowspan=" + Math.pow(2, max_round - 1) / (round_number + 1);
+	}
+
+	function display_match_status_logo(match, i, player_name) {
+		var str = "";
+
+		if (match[i]["winner_name"] == player_name) {
+			str = '<i class="fa-solid fa-check  pull-right"></i>';
+		}
+		else if (match[i]["loser_name"] == player_name) {
+			str = '<i class="fa-solid fa-skull pull-right"></i>';
+		}
+		else {
+			str = '<i class="fa-regular fa-hourglass-half"></i>';
+		}
+
+		return str;
+	}
+
+	function create_round_div(max_round) {
+		var str = "";
+		for (var i = max_round; i >= 0; i--) {
+			str += "<div id='round" + i + "' class='round' > </div>";
+		}
+		return str;
+	}
+	function fill_round(max_round, match) {
+		for (var i = 0; i < match.length; i++) {
+			var round_number = "round" + match[i]["tournament_level"];
+			var round_div = document.getElementById(round_number);
+			var player1_name = match[i]["Player1_name"] == null ? "TDB" : match[i]["Player1_name"];
+			var player2_name = match[i]["Player2_name"] == null ? "TBD" : match[i]["Player2_name"];
+			round_div.innerHTML += "<div id=match>"
+				+ "<div id=player class='d-flex p-2 bd-highlight'>"
+				+ "<div class='p-2 flex-grow-1 bd-highlight'> " + player1_name + "</div>"
+				+ "<div class='p-2 bd-highlight'>" + display_match_status_logo(match, i, player1_name) + "</div>"
+				+ "</div>"
+				+ "<div id=player class='d-flex p-2 bd-highlight'>"
+				+ "<div class='p-2 flex-grow-1 bd-highlight'> " + player2_name + "</div>"
+				+ "<div class='p-2 bd-highlight'>" + display_match_status_logo(match, i, player2_name) + "</div>"
+				+ "</div></div>";
+		}
+	}
+	// function create_round_div(max_round) {
+	// 	var str = "";
+	// 	for (var i = 5; i >= 0; i--) {
+	// 		str += "<div id='round" + i + "' class='round' > </div>";
+	// 	}
+	// 	return str;
+	// }
+	// function fill_round(max_round, match) {
+	// 	for (var i = 0; i < 8; i++) {
+	// 		var round_number = "round4";
+	// 		var round_div = document.getElementById(round_number);
+	// 		var player1_name = "dfwegrwhgrwhrwhrwhwrhwrhwrhwr";
+	// 		var player2_name = "dfwegrwhgrwhrwhrwhwrhwrhwrhwr";
+	// 		round_div.innerHTML += "<div id=match>"
+	// 			+ "<div id=player class='d-flex p-2 bd-highlight'>"
+	// 			+ "<div class='p-2 flex-grow-1 bd-highlight'> " + player1_name + "</div>"
+	// 			+ "<div class='p-2 bd-highlight'>" + 'v'+ "</div>"
+	// 			+ "</div>"
+	// 			+ "<div id=player class='d-flex p-2 bd-highlight'>"
+	// 			+ "<div class='p-2 flex-grow-1 bd-highlight'> " + player2_name + "</div>"
+	// 			+ "<div class='p-2 bd-highlight'>" + 'v'+ "</div>"
+	// 			+ "</div></div>";
+	// 	}
+	// 	for (var i = 0; i < 4; i++) {
+	// 		var round_number = "round3";
+	// 		var round_div = document.getElementById(round_number);
+	// 		var player1_name = "dfwegrwhgrwhrwhrwhwrhwrhwrhwr";
+	// 		var player2_name = "dfwegrwhgrwhrwhrwhwrhwrhwrhwr";
+	// 		round_div.innerHTML += "<div id=match>"
+	// 			+ "<div id=player class='d-flex p-2 bd-highlight'>"
+	// 			+ "<div class='p-2 flex-grow-1 bd-highlight'> " + player1_name + "</div>"
+	// 			+ "<div class='p-2 bd-highlight'>" + 'v'+ "</div>"
+	// 			+ "</div>"
+	// 			+ "<div id=player class='d-flex p-2 bd-highlight'>"
+	// 			+ "<div class='p-2 flex-grow-1 bd-highlight'> " + player2_name + "</div>"
+	// 			+ "<div class='p-2 bd-highlight'>" + 'v'+ "</div>"
+	// 			+ "</div></div>";
+	// 	}
+	// 	for (var i = 0; i < 2; i++) {
+	// 		var round_number = "round2";
+	// 		var round_div = document.getElementById(round_number);
+	// 		var player1_name = "dfwegrwhgrwhrwhrwhwrhwrhwrhwr";
+	// 		var player2_name = "dfwegrwhgrwhrwhrwhwrhwrhwrhwr";
+	// 		round_div.innerHTML += "<div id=match>"
+	// 			+ "<div id=player class='d-flex p-2 bd-highlight'>"
+	// 			+ "<div class='p-2 flex-grow-1 bd-highlight'> " + player1_name + "</div>"
+	// 			+ "<div class='p-2 bd-highlight'>" + 'v'+ "</div>"
+	// 			+ "</div>"
+	// 			+ "<div id=player class='d-flex p-2 bd-highlight'>"
+	// 			+ "<div class='p-2 flex-grow-1 bd-highlight'> " + player2_name + "</div>"
+	// 			+ "<div class='p-2 bd-highlight'>" + 'v'+ "</div>"
+	// 			+ "</div></div>";
+	// 	}
+	// }
+
+	function fill_winner_tournament(winner_name) {
+		// Tournament winner
+		var round_number = "round0";
+		
+		var round_div = document.getElementById(round_number);
+		round_div.innerHTML += "<div id=match >"
+			+ "<div id=player class='d-flex p-2 bd-highlight'>"
+			+ "<div class='p-2 flex-grow-1 bd-highlight'> " + winner_name + "</div>"
+			+ "<div class='p-2 bd-highlight'>" + '<i class="fa-solid fa-trophy push-right"></i>'
+			+ "</div></div>";
+	}
+
+
+
+
+	async function render(match, winner) {
+		const elm = await waitForElm(".bracket");
+
+		var max_round = get_max_level(match);
+
+
+		var fuck = document.getElementById("bracket");
+		if (fuck == 'null')
+			await sleep(10000);
+		var div = document.getElementById("bracket");
+		if (winner != null)
+			winner_name = winner["public_username"];
+		else {
+			winner_name = "TBD";
+		}
+
+		div.innerHTML = create_round_div(max_round);
+		fill_round(max_round, match);
+		fill_winner_tournament(winner_name);
+	}
+
+	function waitForElm(selector) {
+		return new Promise(resolve => {
+			if (document.querySelector(selector)) {
+				return resolve(document.querySelector(selector));
+			}
+
+			const observer = new MutationObserver(mutations => {
+				if (document.querySelector(selector)) {
+					observer.disconnect();
+					resolve(document.querySelector(selector));
+				}
+			});
+
+			// If you get "parameter 1 is not of type 'Node'" error, see https://stackoverflow.com/a/77855838/492336
+			observer.observe(document.body, {
+				childList: true,
+				subtree: true
+			});
+		});
+	}
+
+
+</script>
+<!-- {% endblock %} -->

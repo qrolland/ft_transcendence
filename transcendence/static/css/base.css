@@ -1,0 +1,140 @@
+:root {
+	--accent-color: rgb(0, 225, 255);
+	--purple1: rgb(156, 16, 190);
+	--white: #fff;
+	--red: #ff0000;
+	--black:#080808;
+  }
+
+
+:root {
+	--nav-selected-color: rgb(0, 225, 255);
+	--block-one-color: #e83eff82;
+	--block-two-color: rgba(82, 47, 255, 0.679);
+	/* -- */
+}
+
+body {
+	margin: 0;
+	font-family: 'Poppins', sans-serif;
+	/* font-weight: 600; */
+	background-color: #20013d;
+	min-height: 100vh;
+	min-width: 600px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	color: white;
+	overflow: auto;
+	user-select: none;
+	}
+
+.blur-cover {
+	top: 0;
+	left: 0;
+	position: absolute;
+	width: 100vw;
+	height: 100vh;
+	min-height: 100vh;
+	backdrop-filter: blur(5vw);
+	z-index: -99;
+	/* background-color: red; */
+
+}
+.bg-block {
+	background: rgba(255, 255, 255, .3);
+	backdrop-filter: blur(10px);
+	-webkit-backdrop-filter: blur(10px);
+	border-radius: 10px;
+	border-radius: 50%;
+	border-left: 1px solid rgba(255, 255, 255, .3);
+	border-top: 1px solid rgba(255, 255, 255, .3);
+	box-shadow: 10px 10px 60px -8px rgba(0,0,0,0.2);
+	position: absolute;
+	transition: all 0.2s ease;
+	z-index: -100;
+}
+
+.block-1 {
+	background: var(--block-one-color);
+	height: 35vh; width: 35vh;
+	/* height: 380px; width: 380px; */
+	/* top: 0px; left: 150px; */
+	top: 0;
+	left: 0;
+	animation: anime_block_1 6s ease-in-out infinite;
+}
+
+
+
+.block-2 {
+	background: var(--block-two-color);
+	height: 30vh; width: 30vh;
+	/* height: 380px; width: 380px; */
+	/* bottom: 75px; right: 75px; */
+	right: 0;
+	bottom: 0;
+	animation: anime_block_2 6s ease-in-out infinite;
+}
+
+@keyframes anime_block_1 {
+	0% {
+		background: var(--block-one-color);
+		height: 40vh; width: 40vh;
+		border-radius: 50%;
+		left: 0;
+	}
+	50% {
+		background: var(--block-two-color);
+		height: 30vh; width: 30vh;
+		border-radius: 25%;
+		left: 2%;
+	}
+	100% {
+		background: var(--block-one-color);
+		height: 40vh; width: 40vh;
+		border-radius: 50%;
+		left: 0;
+	}
+}
+
+@keyframes anime_block_2 {
+	0% {
+		background: var(--block-two-color);
+		height: 30vh; width: 30vh;
+		right: 0;
+	}
+	50% {
+		background: var(--block-one-color);
+		height: 40vh; width: 40vh;
+		right: 2%;
+	}
+	100% {
+		background: var(--block-two-color);
+		height: 30vh; width: 30vh;
+		right: 0;
+	}
+}
+
+
+.main-container {
+	flex-direction: row;
+	display: flex;
+	width: 90vw;
+	height: 90vh;
+	margin: 5vh auto;
+	min-height: 775px;
+	min-width: 820px;
+	overflow: hidden;
+
+	background: rgba(0, 0, 0, 0.379);
+
+	-webkit-box-shadow: 2px 2px 22px 3px rgba(0,0,0,0.55);
+	-moz-box-shadow: 2px 2px 22px 3px rgba(0,0,0,0.55);
+	box-shadow: 2px 2px 22px 3px rgba(0,0,0,0.55);
+
+	backdrop-filter: blur(5px);
+	-webkit-backdrop-filter: blur(5px);
+	border: 1px outset rgba(149, 0, 255, 0.435);
+	border-radius: 24px;
+}

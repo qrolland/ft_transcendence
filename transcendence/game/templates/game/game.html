@@ -1,0 +1,118 @@
+{% load static %}
+
+{% block title %}Game page{% endblock %}
+
+
+{% block content %}
+<div id="new_content">
+	<div id="games-div">
+		<div class="row justify-content-center">
+			<h1 class="text-center">Discover our games</h1>
+			<div class="w-100" style="padding: 6px;"></div>
+			<p class="text-center">Explore our collection of entertaining games designed to keep you engaged and entertained for hours.</p>
+			<div class="w-100" style="padding: 12px;"></div>
+
+			<div class="row justify-content-center flex-nowrap">
+				<div class="card col-4 w-30 my-game-card">
+					<img class="card-img-top" src="{% static  'images/games_pong_bg2.png' %}" alt="3D Pong">
+					<div class="card-body">
+						<h5 class="card-title">Experience 3D Pong</h5>
+						<p class="card-text">Dive into the next generation of gaming with our immersive 3D Pong experience.
+							Explore stunning visuals, dynamic gameplay, and endless fun. Get ready to redefine your gaming experience.
+						</p>
+					</div>
+					<button onclick="urlRoute('/ponggame')">PLAY</button>
+				</div>
+				<div class="col-1"></div>
+				<div class="card col-4 w-30 my-game-card">
+					<img class="card-img-top" src="{% static  'images/games_ttt_bg.png' %}" alt="Tic-Tac-Toe">
+					<div class="card-body">
+						<h5 class="card-title">Classic Tic-Tac-Toe</h5>
+						<p class="card-text">Challenge a friend locally or compete against players with our online multiplayer
+							Tic-Tac-Toe game. Enjoy the classic gameplay with a modern twist !
+						</p>
+					</div>
+					<button onclick="choose()">PLAY</button>
+				</div>
+			</div>
+		</div>
+	</div>
+<!-- etape1 choix du jeu -->
+<!-- <div id="game-choices" class="flex-center">
+    <div class="game-choice" id="pong">
+        {% load static %}
+        <img src="{% static  'images/pong.png' %}" class="button-ttt" onclick="urlRoute('/ponggame')"></img>
+        <h3>Pong 3D</h3>
+    </div>
+    <div class="game-choice" id="ttt">
+        <img src="{% static  'images/tic-tac-toe.png' %}" class="button-ttt" onclick="choose()"></img>
+        <h3>Tic Tac Toe</h3>
+    </div>
+</div> -->
+
+<!-- etape 2 choix du mode de jeu -->
+<div id="game-mode-choice" class="flex-center" style="display: none">
+	<div class="row" style="width: 100%; height: 100%;">
+		<div class="col-4 offset-md-3 ttt_col">
+			<button id="local-ttt" class="canvas-button-ttt my-btn-outlined" onclick="start()">Local</button>
+		</div>
+
+		<div class="col-4 offset-md-1 ttt_col">
+			<button id="online-ttt" class="canvas-button-ttt my-btn-outlined" onclick="online()">Online</button>
+		</div>
+	</div>
+</div>
+
+
+<!-- etape 3 attente d'un adversaire -->
+<div id="waiting-opponent">
+    <div id="log-player-info">
+        <h4 id="log-as-id">Log in as player </h4>
+    </div>
+    <div id="socket-waiting">
+        <div>
+            <h4>Waiting for other user ... (1/2)</h4>
+        </div>
+		<div class="wrapper_loader">
+			<div class="vert_center">
+				<div class="loader-ttt"></div>
+			</div>
+		</div>
+    </div>
+    <div id="div-timer-running">
+        <h4>Game starts in :</h4>
+        <h4 id="timer-running">3</h4>
+    </div>
+</div>
+
+<!-- <div class="buttons">
+    <button type="button" onclick="clickOpenSocket()" id="join-btn" class="btn btn-success btn-lg" style="display: none">JOIN LOBBY</button>
+    <button type="button" onclick="clickCloseSocket()" id="left-btn" class="btn btn-danger btn-lg" style="display: none">LEFT LOBBY</button>
+</div> -->
+<!-- etape 4 tictactoe -->
+<div id="score-message-ttt">Let's play! {{ user.public_username }} you start!</div></span>
+<canvas id="tic-tac-toe-board" class="canvas-ttt"></canvas>
+<div id="buttons-canvas-ttt">
+    <button id="restart-ttt" class="canvas-button-ttt my-btn-outlined" onclick="start()" style="display: none;">Start a new game </button>
+    <button id="left-btn" class="canvas-button-ttt my-btn-outlined" onclick="clickCloseSocket()" style="display: none">Quit</button>
+</div>
+
+<div id="username" style="display: none">{{user.public_username}}</div>
+
+<!-- Formulaire caché pour l'envoi des données -->
+<form id="ttt-form" method="post" style="display: none">
+    {% csrf_token %}
+    <input type="hidden" name="gamesPlayedTTT" id="games-played-ttt" value="{{ user.games_played_ttt }}">
+    <input type="hidden" name="nbWinTTT" id="nb-win-ttt" value="{{ user.nb_win_ttt }}">
+    <input type="hidden" name="nbLoseTTT" id="nb-lose-ttt" value="{{ user.nb_lose_ttt }}">
+    <input type="hidden" name="winnerTTT" id="winner-ttt">
+    <input type="hidden" name="opponentTTT" id="opponent-ttt">
+</form>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'js/navbar.js' %}"></script>
+<script src="{% static 'js/tic-tac-toe.js' %}"></script>
+<script src="{% static 'js/online_ttt.js' %}"></script>
+{% endblock %}

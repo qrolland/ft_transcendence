@@ -1,0 +1,35 @@
+
+{% load static %}
+
+{% block title %}Home page{% endblock %}
+{% block scripts %}
+<script type="text/javascript" src="{% static 'js/home.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+<div id="new_content">
+	<video autoplay id="home-video" loop="infinite" muted="true" onclick="stop_trailer()">
+		<source src="{% static 'media/trailer_trim.mp4' %}" type="video/mp4">
+	</video>
+	<div id="blur-video"></div>
+	<div id="home">
+		<div class="row justify-content-center">
+			<h1 class="text-center">Experience 3D Pong: The Classic Game Reimagined!</h1>
+			<div class="w-100" style="padding: 12px;"></div>
+			<p class="text-center">Welcome to the future of gaming!
+				Immerse yourself in the next level of Pong with our stunning
+				3D video rendition. Finally available for you to play, this modern
+				twist on the classic game will keep you hooked for hours. Get ready
+				to experience nostalgia in a whole new dimension.
+			</p>
+			<div class="w-100" style="padding: 24px;"></div>
+			<div class="row justify-content-center">
+				<button class="my-play-now-btn col-4" onclick="urlRoute('/ponggame')">PLAY NOW</button>
+				<button class="my-watch-trailer-btn col-4" onclick="play_trailer()">WATCH TRAILER</button>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}
+
+

@@ -1,0 +1,566 @@
+#profile-div {
+	position: relative;
+	width: 100%;
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	/* background-color: rebeccapurple; */
+}
+
+#profile-div > div {
+	width: 100%;
+	/* background-color: red; */
+}
+
+#profile-div h3 {
+	font-weight: 700;
+}
+
+#profile-div .spacer {
+	width: 70%;
+	margin-top: 12px;
+	margin-bottom: 32px;
+	height: 1px;
+	background-color: rgba(255, 255, 255, 0.219);
+}
+
+#profile-tab {
+	position: relative;
+	/* justify-content: center; */
+	height: 60vh;
+	width: 100%;
+	min-width: 650px;
+	background-color: rgba(29, 3, 52, 0.706);
+	border-radius: 32px;
+	overflow: auto;
+}
+
+#profile-tab::-webkit-scrollbar-track {
+	margin: 32px;
+}
+
+#selected-tab-profile {
+	position: relative;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 16px;
+	width: 100%;
+	/* background-color: red; */
+}
+
+#selected-tab-profile > div {
+	position: relative;
+	border: 2px solid rgb(149, 0, 255);
+	border-radius: 16px;
+	padding: 4px;
+	background-color: #000;
+	/* background-color: green; */
+}
+
+#selected-tab-profile button {
+	font-weight: 700;
+	/* margin: 4px; */
+	border: none;
+	background: transparent;
+	color: white;
+	width: 172px;
+	height: 32px;
+}
+
+#selector-for-tab-profile {
+	position: absolute;
+	height: 32px;
+	width: 172px;
+	background-color: rgb(255, 255, 255, 0.3);
+	border-radius: 10px;
+	transition: .3s;
+}
+
+#game-mode-stats {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 70%;
+	text-wrap: nowrap;
+	/* border-radius: 18px;
+	border: 2px solid white; */
+}
+
+#game-mode-stats .list-group {
+	border: none;
+	border-radius: 0px;
+	font-size: 16px;
+
+}
+
+
+#game-mode-stats .list-group:nth-child(1) {
+	border-top-left-radius: 16px;
+	border-bottom-left-radius: 16px;
+}
+#game-mode-stats .list-group:nth-child(4) {
+	border-top-right-radius: 16px;
+	border-bottom-right-radius: 16px;
+}
+
+#game-mode-stats .list-group .list-group-item {
+	border: 1px solid white;
+	color: white;
+	font-weight: 700;
+	text-align: center;
+	background-color: #00000042;
+}
+
+
+#game-mode-stats .list-group .active,
+#game-mode-stats .list-group:nth-child(1) li .active {
+	color: white;
+	background-color: #ff31e4a1;
+}
+#game-mode-stats .list-group:nth-child(1) li:nth-child(2),
+#game-mode-stats .list-group:nth-child(1) li:nth-child(3),
+#game-mode-stats .list-group:nth-child(1) li:nth-child(4)
+ {
+	background-color: #0000009f;
+}
+
+
+
+#profile-stats {
+	position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 16px;
+}
+
+#profile-history, #profile-friends {
+	padding: 16px;
+}
+
+/* #profile-stats .fa-circle-info {
+	color: rgb(255, 255, 255);
+	margin-right: 4px;
+  } */
+
+#profile-stats .fa-gamepad {
+	color: rgb(0, 255, 255);
+	margin-right: 4px;
+  }
+
+#profile-stats .fa-trophy {
+	color: rgb(0, 255, 0);
+	margin-right: 4px;
+  }
+
+#profile-stats .fa-skull-crossbones {
+	color: rgb(255, 0, 0);
+	margin-right: 4px;
+  }
+
+
+#profile-friends, #profile-history, #profile-stats {
+	position: relative;
+	text-align: center;
+}
+
+#profile-stats-title h6,
+#profile-friends-title h6,
+#profile-history-title h6
+{
+	font-size: 24px;
+	font-weight: 700;
+}
+
+#profile-stats .stats-spacer,
+#profile-friends .friend-spacer,
+#profile-history .history-spacer
+{
+	height: 1px;
+	margin: 16px;
+	width: 90%;
+	background-color: #ffffff5a;
+}
+
+#profile-friends .friend-spacer
+{
+	margin: 0;
+}
+
+.friend-info {
+	display: flex;
+	width: 90%;
+	background-color: rgba(255, 255, 255, 0.124);
+	padding: 32px;
+	border-radius: 8px;
+}
+
+.friend-info img {
+	height: 24px;
+	width: 24px;
+	border-color: 2px solid white;
+}
+
+.friend_info_button_wrapper{
+	margin-left: auto;
+}
+
+.remove_friend{
+	background-color: rgba(240, 248, 255, 0);
+	color: white;
+	border: none;
+}
+
+.search_button{
+	margin-left: auto;
+	background-color: rgba(240, 248, 255, 0);
+	border: none;
+	color: white;
+	transition: .2s;
+}
+
+#profile-history .game-spacer {
+	margin: auto;
+	margin-top: 16px;
+	margin-bottom: 8px;
+	width: 90%;
+	height: 1px;
+	background-color: rgba(255, 255, 255, 0.411);
+}
+
+
+.search_button:hover {
+	text-shadow: #FFFFFF 1px 0 5px;
+}
+
+#friend-list-wrapper, #history-list-wrapper {
+	position: relative;
+	overflow-y: auto;
+	padding: 8px;
+	/* height: 40vh; */
+	/* background-color: blue; */
+}
+
+#history-list-wrapper > div{
+	text-align: start;
+
+}
+
+#history-list-wrapper {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+  /* #profile-container .profile-form {
+	margin-top: 2vh;
+	width: 100%;
+  }
+
+  #profile-info-container {
+	margin-right: 15px;
+	width: 50%;
+	min-width: 340px;
+  } */
+
+  .profile-picture {
+	width: 100px;
+	height: 100px;
+	border-radius: 50%;
+	object-fit: cover;
+	border: 2px solid #ffffff;
+	margin: auto;
+	display: block;
+  }
+
+  #profile-username {
+	text-align: center;
+	margin-top: 10px;
+  }
+
+  #add-friends-form {
+	display: flex;
+	justify-content: center;
+  }
+
+  #add-friends-form .rounded-form input {
+	width: 180px;
+	border: none;
+	border-radius: 0px;
+	color: whitesmoke;
+	background-color: rgba(0, 0, 0, 0.345);
+	height: 100%;
+	font-size: smaller;
+	outline: none;
+	transition: .2s;
+  }
+
+  #add-friends-form .rounded-form input[type=text]:focus {
+	border: 1px solid #ffffff;
+	color: rgb(255, 255, 255);
+  }
+
+  .rounded-form {
+	/* background-color: #fff;
+	border-top-right-radius: 10px;
+	border-bottom-right-radius: 10px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
+  }
+
+#add-friends-form .profile-logo {
+	background-color: #f050ffc5;
+	color: #fff;
+	padding: 10px;
+	border-top-left-radius: 12px;
+	border-bottom-left-radius: 12px;
+}
+
+
+  #add-friends-form .submit {
+	background-color: #f050ffc5;
+	font-weight: 700;
+	width: 64px;
+	border: none;
+	color: white;
+	border-radius: 0px;
+	border-top-right-radius: 12px;
+	border-bottom-right-radius: 12px;
+	outline: none;
+  }
+
+  .message {
+	opacity: 0;
+	margin-top: 12px;
+	font-size: smaller;
+	font-weight: 700;
+	color: rgb(255, 55, 85);
+  }
+
+  .show-column {
+	display: flex;
+	flex-direction: column;
+	align-items: baseline;
+	overflow: auto;
+	max-height: 210px;
+  }
+
+ .profile-img {
+	width: 50px;
+	height: 50px;
+	border-radius: 50%;
+	object-fit: cover;
+	border: 2px solid #ffffff;
+	/* margin: auto; */
+	display: block;
+  }
+
+  .show-info {
+	display: inline-flex;
+	align-items: center;
+	margin-top: 4px;
+	height: 40px;
+	min-height: 40px;
+	max-height: 40px;
+  }
+
+  .margin-left {
+	margin-left: 15px;
+  }
+
+  #friend-username {
+	font-weight: bold;
+  }
+
+  #friend-status {
+	font-size: 14px;
+	font-weight: 700;
+  }
+
+  .fa-circle {
+	margin-left: 5px;
+	font-size: 9px;
+  }
+
+
+#add-friends-form {
+	/* position: absolute;
+	top: 0;
+	right: 0; */
+	width: fit-content;
+	/* border: 2px solid rgb(220, 94, 255); */
+	border-radius: 16px;
+	/* background-color: rgba(0, 0, 0, 0.345); */
+}
+
+/* .profile-form {
+  background-color: #570080;
+  padding: 30px;
+  width: 70vh;
+  border-radius: 20px;
+  margin-top: 10vh;
+}
+
+.profile-form-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+} */
+
+
+#TrustFactorProfile{
+	text-align: center;
+	vertical-align: middle;
+	justify-content: center;
+}
+
+#stat_row{
+	border-radius: 32px;
+	border: 1px solid white;
+	background-color: rgba(0, 0, 0, 0.345);
+	margin-top: 16px;
+	padding: 32px;
+	width: 70%;
+	height: 25%;
+	display: flex;
+	justify-content: center;
+	/* align-items: center; */
+}
+
+#wrapperIcon{
+	position: relative;
+	top: 25%;
+}
+
+
+#TTT_table{
+	margin-left: 20%;
+	margin-right: 12px;
+	table-layout: fixed;
+	display: block;
+	height: 40px;
+	min-height: 40px;
+	max-height: 40px;
+
+}
+
+#TTT_cell{
+	border: 1px solid;
+	height: 10px;
+	min-height: 10px;
+	max-height: 10px;
+	overflow: hidden;
+	width: 10px;
+	min-width: 10px;
+	max-width: 10px;
+	justify-content: center;
+}
+
+#TTT_span{
+	display: flex ;
+	height: 10px;
+	min-height: 10px;
+	max-height: 10px;
+	overflow: hidden;
+	font-size: xx-small;
+	justify-content: center;
+	align-items: center;
+}
+
+#TTT_row{
+	height: 10px;
+	min-height: 10px;
+	max-height: 10px;
+}
+
+.showTTTBoard{
+	min-width: 48px;
+	max-width: 48px;
+	width: 48px;
+
+	min-height: 48px;
+	max-height: 48px;
+	height: 48px;
+
+	margin: 16px;
+}
+
+#game-date {
+	/* font-size: x-small; */
+	font-size: 16px;
+	font-weight: 700;
+	width: 160px;
+	padding: 12px;
+  }
+
+  .show-info img {
+	width: 40px;
+	height: 40px;
+	border: 2px solid #ffffff;
+  }
+
+  #game-logo {
+	font-size: 20px;
+	width: 24px;
+  }
+
+.game-history-user-img {
+	margin-left: 8px;
+}
+
+  .show-info .game-issue-icon {
+	text-align: center;
+	width: 32px;
+	font-size: 16px;
+	/* background-color: red; */
+	/* margin: auto; */
+  }
+
+  .show-info .fa-trophy {
+	color: rgb(96, 255, 96);
+  }
+
+  .show-info .fa-skull-crossbones {
+	color: rgb(255, 79, 79);
+  }
+
+  .show-info .fa-grip-lines {
+	color: rgb(79, 190, 255);
+  }
+
+  #game-history-username {
+	width: fit-content;
+	/* text-transform: uppercase; */
+	color: rgb(167, 255, 248);
+	font-weight: 700;
+	margin-left: 5px;
+  }
+
+  #game-history-opponent {
+	color: rgb(255, 152, 152);
+	/* text-transform: uppercase; */
+	/* color: rgb(255, 70, 70); */
+	font-weight: 700;
+	margin-left: 5px;
+  }
+
+#game-history-scoreboard {
+	min-width: 48px;
+	max-width: 48px;
+	width: 48px;
+
+	font-weight: 700;
+	margin: 16px;
+}
+
+#friend_info_button_wrapper {
+	margin-left: auto;
+}
+
+/* #profile-stats, */
+#profile-friends,
+#profile-history
+{
+	display: none;
+}

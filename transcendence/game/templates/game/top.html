@@ -1,0 +1,86 @@
+{% load static %}
+
+{% block title %}Top page{% endblock %}
+{% block scripts %}{% endblock %}
+
+{% block content %}
+<div id="new_content">
+    <div id="top-div">
+		<div class="row justify-content-center">
+			<h1 class="text-center">Leaderboard</h1>
+			<div class="w-100"></div>
+			<div class="spacer"></div>
+			<div class="w-100"></div>
+			<div id="top-list">
+
+                <!-- <div id="search">
+                    <input id="search_username">
+
+                    </input>
+                    <button id="search_user" onclick='searchUser()'>
+                        Search User
+                    </button>
+                </div> -->
+
+				<div id="selected-tab-leaderboard">
+					<div>
+						<div id="selector-for-tab-leaderboard"></div>
+						<button onclick="
+						document.getElementById('content-list-top-ttt').style.display = 'none';
+						document.getElementById('content-list-top-pong').style.display = 'block';
+						document.getElementById('selector-for-tab-leaderboard').style.transform = 'translate(0%, 0%)';
+							">PONG</button>
+						<button onclick="
+						document.getElementById('content-list-top-ttt').style.display = 'block';
+						document.getElementById('content-list-top-pong').style.display = 'none';
+						document.getElementById('selector-for-tab-leaderboard').style.transform = 'translate(103%, 0%)';
+							">TIC-TAC-TOE</button>
+					</div>
+				</div>
+
+				<table class="my-top-list-table">
+					<thead>
+						<tr>
+							<th>Rank</th>
+							<th>Picture</th>
+							<th>User</th>
+							<th>Played</th>
+							<th>Won</th>
+							<th>Lost</th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody id="content-list-top-ttt">
+						{% for player in players_ttt %}
+						 <tr>
+							<td>#{{ forloop.counter }}</td>
+							<td><img class="profile-img margin-small-left" src="{{ save_dir}}{{player.profile_picture_full_name}}" alt="{{ player.username }}'s profile Picture"></img></td>
+							<td>{{ player.public_username }}</td>
+							<td><i class="fa-solid fa-gamepad"></i>{{ player.games_played_ttt }}</td>
+							<td><i class="fa-solid fa-trophy"></i>{{ player.nb_win_ttt }}</td>
+							<td><i class="fa-solid fa-skull-crossbones"></i>{{ player.nb_lose_ttt }}</td>
+							<td><button id="{{ player.username }}" class="view-profile-btn" onclick=searchTop(this.id)>View profile</button></td>
+						</tr>
+						{% endfor %}
+					</tbody>
+
+					<tbody id="content-list-top-pong">
+						{% for player in players_pong %}
+						 <tr>
+							<td>#{{ forloop.counter }}</td>
+							<td><img class="profile-img margin-small-left" src="{{ save_dir}}{{player.profile_picture_full_name}}"alt="{{ player.username }}'s profile Picture"></img></td>
+							<td>{{ player.public_username }}</td>
+							<td><i class="fa-solid fa-gamepad"></i>{{ player.games_played_pong }}</td>
+							<td><i class="fa-solid fa-trophy"></i>{{ player.nb_win_pong }}</td>
+							<td><i class="fa-solid fa-skull-crossbones"></i>{{ player.nb_lose_pong }}</td>
+							<td><button id="{{ player.username }}" class="view-profile-btn" onclick=searchTop(this.id)>View profile</button></td>
+						</tr>
+						{% endfor %}
+					</tbody>
+
+				</table>
+			</div>
+		</div>
+    </div>
+</div>
+{% endblock %}

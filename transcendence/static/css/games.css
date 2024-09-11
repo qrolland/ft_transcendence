@@ -1,0 +1,114 @@
+#games-div {
+	height: 100%;
+	width: 100%;
+	position: relative;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+#games-div div h1 {
+	font-weight: 700;
+}
+
+#games-div div p {
+	font-weight: 100;
+	font-size: 1.2rem;
+	/* line-height: 1; */
+}
+
+.my-game-card {
+	/* background-color: red; */
+	border: 3px solid rgba(149, 0, 255, 0.435);
+	border-radius: 32px;
+	background: transparent;
+	backdrop-filter: blur(5vw);
+	align-items: center;
+	min-width: 300px;
+	margin: 0;
+	padding: 0;
+}
+
+@keyframes cardAnimation {
+	0% {
+		box-shadow: 2px 2px 15px 0px #de3bff;
+	}
+	25% {
+		box-shadow: 2px -2px 15px 0px #d812ff;
+	}
+	50% {
+		box-shadow: -2px -2px 15px 0px #ba41d2;
+	}
+	75% {
+		box-shadow: -2px 2px 15px 0px #ab22c7;
+	}
+	100% {
+		box-shadow: 2px 2px 15px 0px #de3bff;
+	}
+}
+
+.my-game-card:hover {
+	/* animation: cardAnimation 3s linear infinite; */
+	-webkit-box-shadow: 0px 0px 17px 0px #44004d;
+	box-shadow: 0px 0px 17px 0px #44004d;
+}
+
+.my-game-card img {
+	/* padding: 12px; */
+	/* text-align: center; */
+	border-top-left-radius: 32px;
+	border-top-right-radius: 32px;
+	/* height: auto; */
+	width: 100%;
+}
+
+.my-game-card h5 {
+	font-size: 1.6rem;
+	font-weight: 600;
+	color: white;
+}
+
+.my-game-card p {
+	font-size: 1rem;
+	font-weight: 100;
+	color: white;
+}
+
+/* .my-game-card .card-body {
+	justify-content: center;
+	align-items: center;
+} */
+
+.my-game-card button {
+	text-align: center;
+	justify-content: center;
+	align-items: center;
+	cursor: pointer;
+	text-wrap: nowrap;
+	/* width: 128px; */
+	width: 70%;
+	margin: 16px;
+	background: linear-gradient(135deg, rgb(145, 0, 161) 0%, rgb(46, 0, 194) 100%);
+	border: 3px solid rgb(149, 0, 255);
+	color: white;
+	padding: 6px 12px;
+	font-size: 2rem;
+
+	border-radius: 16px;
+	box-shadow: 0 4px 18px rgba(219, 74, 255, 0.295);
+	backdrop-filter: blur(4px);
+	-webkit-backdrop-filter: blur(4px);
+	transition: .2s;
+	/* background-color: blue; */
+  }
+
+  .my-game-card button:hover {
+	border-style: inset;
+	box-shadow: 0 4px 12px rgb(0, 0, 0);
+  }
+
+  .my-game-card button:active {
+	box-shadow: inset 4px 4px 26px rgb(156, 16, 190);
+	border-color: rgb(149, 0, 255);
+	border-style: inset;
+  }

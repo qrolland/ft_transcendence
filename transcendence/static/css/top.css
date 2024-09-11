@@ -1,0 +1,241 @@
+#top-div {
+	position: relative;
+	width: 100%;
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	/* background-color: rebeccapurple; */
+}
+
+#top-div > div {
+	width: 100%;
+	/* background-color: red; */
+}
+
+#top-div h1 {
+	font-weight: 700;
+}
+
+#top-div .spacer {
+	width: 70%;
+	margin-top: 12px;
+	margin-bottom: 32px;
+	height: 1px;
+	background-color: rgba(255, 255, 255, 0.219);
+}
+
+#top-list {
+	/* padding-top: 16px; */
+	position: relative;
+	display: table;
+	justify-content: center;
+	/* align-items: center; */
+	/* display: table; */
+	height: 60vh;
+	width: 100%;
+	/* background-color: rgba(92, 13, 89, 0.164); */
+	background-color: rgba(29, 3, 52, 0.706);
+	border-radius: 32px;
+	/* overflow: auto; */
+}
+
+.my-top-list-table, .top-user-list {
+	position: relative;
+	border-collapse: collapse;
+	width: 100%;
+}
+
+.my-top-list-table thead,
+.top-user-list thead {
+	border-bottom: 1px solid rgb(255, 255, 255, 0.2);
+	margin-bottom: 12px;
+	border-collapse: separate;
+	display: table;
+	width: 100%;
+}
+
+.my-top-list-table thead th,
+.top-user-list thead th {
+	table-layout: fixed;
+	padding-top: 16px;
+	padding-left: 12px;
+	padding-bottom: 12px;
+	font-weight: 300;
+	color: rgb(255, 255, 255, 0.2);
+}
+
+.my-top-list-table thead th {
+	width: 14%;
+}
+
+
+
+.my-top-list-table tbody,
+.top-user-list tbody {
+	/* background-color: red; */
+	border-collapse: separate;
+	overflow: auto;
+	display: block;
+	width: 100%;
+	height: 50vh;
+	margin-bottom: 16px;
+	/* height: 200px; */
+	/* background-color: rgb(255, 255, 255, 0.2); */
+
+}
+
+.my-top-list-table tbody::-webkit-scrollbar,
+.top-user-list tbody::-webkit-scrollbar {
+	background-color: #000;
+	width: 5px;
+}
+
+.my-top-list-table tbody tr,
+.top-user-list tbody tr {
+	background-color: rgba(255, 255, 255, 0.124);
+	border-radius: 18px;
+	display: table;
+	width: 100%;
+	margin-top: 12px;
+}
+
+
+.my-top-list-table tbody td,
+.top-user-list tbody td {
+	padding-top: 12px;
+	padding-left: 12px;
+	padding-bottom: 12px;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
+	table-layout: fixed;
+}
+
+.my-top-list-table tbody td {
+	width: 14%;
+	max-width: 200px;
+}
+
+.top-user-list tbody td {
+	width: 14%;
+	max-width: 280px;
+}
+/* .top-user-list tbody td:nth-child(3){
+	width: 20%;
+	max-width: 280px;
+} */
+
+
+/* TOP NAME */
+.my-top-list-table tbody td {
+	font-weight: 700;
+}
+
+.my-top-list-table tbody td img {
+	height: 36px;
+	width: 36px;
+	border: 1px solid rgba(204, 0, 255, 0.37);
+}
+
+.my-top-list-table tbody td:nth-child(4) i,
+.my-top-list-table tbody td:nth-child(5) i,
+.my-top-list-table tbody td:nth-child(6) i
+ {
+	margin-right: 6px;
+}
+.my-top-list-table tbody td:nth-child(4) {
+	color: rgb(0, 255, 255);
+}
+
+.my-top-list-table tbody td:nth-child(5) {
+	color: rgb(0, 255, 0);
+}
+
+.my-top-list-table tbody td:nth-child(6) {
+	color: rgb(255, 0, 0);
+}
+
+.my-top-list-table tbody td:nth-child(7) {
+	text-align: center;
+}
+
+/* .top-user-list tbody td:nth-child(3) {
+	padding: 8px 8px;
+	text-align: end;
+} */
+
+.view-profile-btn {
+	cursor: pointer;
+
+	width: fit-content;
+	padding: 8px 8px;
+	height:  48px;
+	background-color: black;
+	border: 3px solid rgba(149, 0, 255, 0.75);
+	color: white;
+	font-size: 14px;
+	font-weight: 600;
+
+	border-radius: 16px;
+	box-shadow: 0 4px 18px rgba(219, 74, 255, 0.295);
+	transition: .2s;
+	text-align: center;
+  }
+
+.view-profile-btn:hover {
+	border-color: rgb(149, 0, 255);
+	background: linear-gradient(135deg, rgb(145, 0, 161) 0%, rgb(46, 0, 194) 100%);
+	box-shadow: 0 4px 12px rgb(0, 0, 0);
+  }
+
+.view-profile-btn:active {
+	box-shadow: inset 4px 4px 26px rgb(156, 16, 190);
+	border-color: rgb(149, 0, 255);
+	border-style: inset;
+  }
+
+
+#content-list-top-ttt {
+	display: none;
+}
+
+
+#selected-tab-leaderboard {
+	position: relative;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 16px;
+	width: 100%;
+	/* background-color: red; */
+}
+
+#selected-tab-leaderboard > div {
+	position: relative;
+	border: 2px solid rgb(149, 0, 255);
+	border-radius: 16px;
+	padding: 4px;
+	background-color: #000;
+	/* background-color: green; */
+}
+
+#selected-tab-leaderboard button {
+	font-weight: 700;
+	/* margin: 4px; */
+	border: none;
+	background: transparent;
+	color: white;
+	width: 172px;
+	height: 32px;
+}
+
+#selector-for-tab-leaderboard {
+	position: absolute;
+	height: 32px;
+	width: 172px;
+	background-color: rgb(255, 255, 255, 0.3);
+	border-radius: 10px;
+	transition: .3s;
+}
+

@@ -1,0 +1,29 @@
+{% load static %}
+
+<div id="new_content">
+
+	<!-- <div class="tv-global-wrapper"> -->
+
+		<div id="main-tv" class="row align-items-center">
+			<div class="tv-div col-7 row">
+				<div id="scoreboard-div">
+					<div id="tv-player-1">X</div>
+					<div id="tv-score-p1">0</div>
+					<div id="tv-player-2">X</div>
+					<div id="tv-score-p2">0</div>
+				</div>
+				<div id="tv-canva-div">
+					<canvas id="tv_canvas" width="100" height="100"></canvas>
+				</div>
+			</div>
+			<div class="tv-spacer col-1"></div>
+			<div id="match-list-wrapper" class="col-4">
+				<h1>Live Match</h1>
+				<div class="live-match-spacer"></div>
+				<div id="match_list" class="row"></div>
+			</div>
+		</div>
+	<!-- </div> -->
+</div>
+
+<script type="text/javascript" src="{% static 'js/TV.js' %}"></script>

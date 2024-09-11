@@ -1,0 +1,184 @@
+/* .tv-global-wrapper {
+	overflow: hidden;
+	width: 100%;
+	height: 100%;
+	position: relative;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+} */
+
+#main-tv {
+	overflow: hidden;
+	/* background-color: green; */
+	width: 100%;
+	height: 100%;
+	position: relative;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.tv-spacer {
+	height: 90%;
+	width: 1px;
+	border-left: 1px solid rgba(255, 255, 255, 0.350);
+	margin: auto;
+	/* background-color: white; */
+}
+
+#match-list-wrapper {
+	height: 90%;
+	padding: 32px;
+	border-radius: 32px;
+	text-align: center;
+	background-color: rgba(87, 11, 102, 0.597);
+	-webkit-box-shadow: 2px 2px 24px 0px rgba(0,0,0,0.5);
+	-moz-box-shadow: 2px 2px 24px 0px rgba(0,0,0,0.5);
+	box-shadow: 2px 2px 24px 0px rgba(0,0,0,0.5);
+	overflow: auto;
+}
+
+#match-list-wrapper > h1 {
+	font-weight: 700;
+	height: fit-content;
+}
+
+#match-list-wrapper .live-match-spacer {
+	width: 100%;
+	height: 1px;
+	margin-top: 16px;
+	margin-bottom: 32px;
+	background-color: rgba(255, 255, 255, 0.350);
+}
+
+#match_list{
+	position: relative;
+	overflow: auto;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	/* padding: 12px; */
+}
+
+.match-block {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background-color: black;
+	width: 100%;
+	height: 64px;
+	border-radius: 16px;
+	border: 3px solid rgba(123, 0, 255, 0.537);
+	overflow-x: auto;
+	overflow-y: hidden;
+	transition: .2s;
+	margin-bottom: 12px;
+	/* width: fit-content; */
+}
+
+.match-block:hover {
+	cursor: pointer;
+	background: linear-gradient(135deg, rgb(145, 0, 161) 0%, rgb(46, 0, 194) 100%);
+	border-color: rgb(165, 80, 255);
+}
+
+.match-block:active {
+	border-style: inset;
+}
+
+/* Pour les navigateurs basés sur WebKit (comme Chrome et Safari) */
+#match_list::-webkit-scrollbar {
+	width: 1px; /* Largeur de la barre de défilement */
+	height: 3px;
+}
+.match-block div {
+	/* width: 20%; */
+	font-weight: 700;
+	padding: 16px;
+	/* text-overflow: ellipsis;
+	white-space: nowrap; */
+	/* white-space: nowrap;
+	text-wrap: nowrap; */
+}
+
+
+.tv-div {
+	display: flex;
+	justify-content: center;
+	height: 80%;
+}
+
+#scoreboard-div {
+	display: flex;
+	justify-content: center;
+}
+
+#tv-player-1, #tv-player-2 {
+	width: fit-content;
+	height: 72px;
+	padding-left: 48px;
+	padding-right: 48px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-weight: 700;
+	font-size: 20px;
+	background-color: black;
+}
+#tv-player-2 {
+	border: 1px solid blue;
+	border-left: none;
+}
+#tv-player-1 {
+	border: 1px solid red;
+}
+
+#tv-score-p2 {
+	background-color: blue;
+}
+#tv-score-p1 {
+	background-color: red;
+}
+
+#tv-score-p1, #tv-score-p2 {
+	height: 72px;
+	width: 72px;
+	font-size: 28px;
+	font-weight: 700;
+	text-align: center;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+
+
+#tv-canva-div {
+	height: 80%;
+}
+
+
+#tv-canva-div {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+#tv_canvas {
+	border: 2px solid #ffffff;
+	background-color: black;
+	border-radius: 20px;
+}
+
+
+/* #Player_1 #Player_2{
+	font-size: 15px;
+}
+
+#live_match_title{
+	color: white;
+	text-align: center;
+	display: flex;
+} */
+

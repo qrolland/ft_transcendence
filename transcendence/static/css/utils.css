@@ -1,0 +1,110 @@
+.my-btn-back {
+	cursor: pointer;
+	/* width: 36px; */
+	height: 80px;
+	/* margin: 16px; */
+	background-color: transparent; /* Green */
+	border: 2px dashed rgba(138, 0, 11, 0.435);
+	color: rgba(255, 255, 255, 0.452);
+	padding: 15px 32px;
+
+	font-size: 18px;
+
+	border-radius: 16px;
+	box-shadow: 2px 2px 12px rgba(139, 1, 1, 0.233);
+	backdrop-filter: blur(4px);
+	-webkit-backdrop-filter: blur(4px);
+	transition: .2s;
+	display: flex;
+	text-align: center;
+	justify-content: center;
+	align-items: center;
+	z-index: 10;
+  }
+
+  .my-btn-back:hover {
+	background-color: rgba(0, 0, 0, 0.589);
+	border-style: solid;
+	border-color: rgba(255, 17, 17, 0.863);
+	color: white;
+	/* background: linear-gradient(135deg, rgb(145, 0, 161) 0%, rgb(46, 0, 194) 100%); */
+	box-shadow: 0 4px 12px rgb(0, 0, 0);
+}
+
+.my-btn-back:active {
+	background-color: rgba(0, 0, 0, 0.589);
+	box-shadow: inset 1px 1px 26px rgba(190, 16, 16, 0.425);
+	border-color: rgba(255, 17, 17);
+	border-style: inset;
+  }
+
+  .my-btn-leave {
+	cursor: pointer;
+	/* width: 36px; */
+	height: 36px;
+	margin: 16px;
+	background-color: transparent; /* Green */
+	border: 2px dashed rgba(255, 0, 0, 0.350);
+	/* border-style: dotted; */
+	color: rgba(255, 0, 0, 0.350);
+	padding: 15px 32px;
+
+	font-size: 18px;
+
+	border-radius: 8px;
+	box-shadow: 2px 2px 12px rgba(139, 1, 1, 0.233);
+	backdrop-filter: blur(4px);
+	-webkit-backdrop-filter: blur(4px);
+	transition: .2s;
+	display: flex;
+	text-align: center;
+	justify-content: center;
+	align-items: center;
+	z-index: 10;
+  }
+
+  .my-btn-leave:hover {
+	border-style: solid;
+	border-color: rgb(255, 0, 0);
+	color: rgb(255, 0, 0);
+	/* background: linear-gradient(135deg, rgba(255, 0, 0, 0.61) 0%, rgba(255, 0, 0, 0.507) 100%); */
+	box-shadow: 0 4px 12px rgb(0, 0, 0);
+  }
+
+  .my-btn-leave:active {
+	box-shadow: inset 1px 1px 26px rgba(190, 16, 16, 0.425);
+	border-color: rgba(255, 17, 17);
+	border-style: inset;
+  }
+
+
+.my-btn-outlined {
+	cursor: pointer;
+	/* width: 128px; */
+	width: fit-content;
+	margin: 16px;
+	background-color: transparent; /* Green */
+	border: 3px solid rgba(149, 0, 255, 0.435);
+	color: white;
+	padding: 15px 32px;
+	font-size: 28px;
+
+	border-radius: 16px;
+	box-shadow: 0 4px 18px rgba(219, 74, 255, 0.295);
+	backdrop-filter: blur(4px);
+	-webkit-backdrop-filter: blur(4px);
+	transition: .2s;
+	/* background-color: blue; */
+  }
+
+  .my-btn-outlined:hover {
+	border-color: rgb(149, 0, 255);
+	background: linear-gradient(135deg, rgb(145, 0, 161) 0%, rgb(46, 0, 194) 100%);
+	box-shadow: 0 4px 12px rgb(0, 0, 0);
+  }
+
+  .my-btn-outlined:active {
+	box-shadow: inset 4px 4px 26px rgb(156, 16, 190);
+	border-color: rgb(149, 0, 255);
+	border-style: inset;
+  }

@@ -1,0 +1,56 @@
+#infoModalLabel, #tournamentModalTitle {
+	font-weight: 500;
+}
+
+.modal-body h1 {
+		font-weight:900;
+		font-size:1.2em;
+		text-transform:uppercase;
+		color: #000;
+}
+
+#infoModal, #tournamentModal {
+	color: #000;
+}
+
+
+#tournamentModalActionButton {
+	color:rgb(255, 255, 255);
+	background-color:rgb(129, 36, 190);
+	border-radius: 16px;
+	padding: 8px 16px;
+	width: fit-content;
+	font-weight: 600;
+	transition: .2s;
+
+}
+
+#tournamentModalActionButton:hover {
+	background-color:rgb(111, 14, 131);
+	text-decoration:none;
+	color:rgb(255, 255, 255);
+	}
+
+.btn-lg-close {
+	display: flex;
+	justify-content: center;
+	color:#000;
+	background-color:rgb(27, 199, 230);
+	border-radius: 8px;
+	border: 3px red;
+	padding: 8px;
+	margin: 1em auto;
+	width:25%;
+	font-size:1.25em;
+	font-weight: 600;
+
+}
+.btn-lg-close:hover {
+	background-color:#000;
+	text-decoration:none;
+	color:rgb(27, 199, 230);
+	}
+/*
+#modal-btn-2 {
+	display: none;
+} */

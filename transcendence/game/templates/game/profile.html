@@ -1,0 +1,321 @@
+{% load static %}
+{% load env_extra %}
+{% block title %}Profile page{% endblock %}
+
+{% block content %}
+<div id="new_content">
+
+	<div id="profile-div">
+		<div class="row justify-content-center">
+			<div id="profile-picture">
+				{% if user.is_authenticated %}
+				{% if user.profile_picture %}
+				<img src="{{ save_dir}}{{user.profile_picture_full_name}}" class="profile-picture profile-img"
+					alt="{{ user.public_username }}'s Profile Picture"></img>
+				{% else %}
+				<p>No profile picture available</p>
+				{% endif %}
+				{% endif %}
+			</div>
+			<div id="profile-username">
+				<h3>{% if user.is_authenticated %}{{ user.public_username }}{% endif %}</h4>
+			</div>
+			<div class="w-100"></div>
+			<div class="spacer"></div>
+			<div class="w-100"></div>
+			<div id="profile-tab">
+
+				<div id="selected-tab-profile">
+					<div>
+						<div id="selector-for-tab-profile"></div>
+						<button onclick="displayProfileTab('stats')">STATS</button>
+						<button onclick="displayProfileTab('friends')">FRIENDS</button>
+						<button onclick="displayProfileTab('history')">HISTORY</button>
+					</div>
+				</div>
+
+				<div id="profile-stats" class="row justify-content-center">
+					<div id="profile-stats-title">
+						<h6>Stats</h6>
+					</div>
+					<div class="w-100"></div>
+
+					<div class="stats-spacer"></div>
+					<div class="w-100"></div>
+
+
+					<div id="game-mode-stats">
+						<ul class="list-group col-3">
+							<li class="list-group-item flex-fill active">MODE</li>
+							<li class="list-group-item flex-fill">PONG</li>
+							<li class="list-group-item flex-fill">Tic-Tac-Toe</li>
+							<li class="list-group-item flex-fill">Tournaments</li>
+						</ul>
+						<ul class="list-group col-3">
+							<li class="list-group-item flex-fill active"><i class="fas fa-gamepad"></i>PLAYED</li>
+							<li class="list-group-item flex-fill">{{ user.games_played_pong }}</li>
+							<li class="list-group-item flex-fill">{{ user.games_played_ttt }}</li>
+							<li class="list-group-item flex-fill">{{ user.nb_tournament_played }}</li>
+						</ul>
+						<ul class="list-group col-3">
+							<li class="list-group-item flex-fill active"><i class="fas fa-trophy"></i>WON</li>
+							<li class="list-group-item flex-fill">{{ user.nb_win_pong }}</li>
+							<li class="list-group-item flex-fill">{{ user.nb_win_ttt }}</li>
+							<li class="list-group-item flex-fill">{{ user.nb_tournament_won }}</li>
+						</ul>
+						<ul class="list-group col-3">
+							<li class="list-group-item flex-fill active"><i class="fas fa-skull-crossbones"></i>LOST
+							</li>
+							<li class="list-group-item flex-fill">{{ user.nb_lose_pong }}</li>
+							<li class="list-group-item flex-fill">{{ user.nb_lose_ttt }}</li>
+							<li class="list-group-item flex-fill">{{ user.nb_tournament_lost }}</li>
+						</ul>
+					</div>
+					<div class="w-100"></div>
+					<div id="stat_row" class="row">
+
+						<div id="graph_stat" class="col-9">
+
+							<span id="trust_factor" class="stat_tooltip"> {{ user.trust_factor}}</span>
+							<span id="stat_goal_taken" class="stat_tooltip"> {{ user.nb_goal_scored}}</span>
+							<span id="stat_goal_scored" class="stat_tooltip"> {{ user.nb_goal_taken }}</span>
+							<span id="stat_goal_taken_average" class="stat_tooltip"> {{user.nb_goal_scored_average}}</span>
+							<span id="stat_goal_scored_average" class="stat_tooltip"> {{ user.nb_goal_taken_average}}</span>
+
+							<span id="stat_match_won" class="stat_tooltip"> {{ user.nb_lose_pong}}</span>
+							<span id="stat_match_lose" class="stat_tooltip"> {{ user.nb_win_pong }}</span>
+
+							<svg id="stat_svg" x="0" y="0" width="100%" height="100%" viewBox="0 0 500 200"
+								xmlns="http://www.w3.org/2000/svg">
+
+								<defs>
+									<filter id="blurMe">
+										<feGaussianBlur in="SourceGraphic" stdDeviation="0.6" />
+									</filter>
+								</defs>
+								<path id="goal_scored" d="M 140 140
+						a60,60 0 0,0 -120,0" stroke="#FADD5C" fill="none" stroke-width="10" pathLength="90" filter="url(#blurMe)"
+									stroke-dasharray="90" stroke-dashoffset="10" />
+								<path id="goal_taken" d="M 20 140
+						a60,60 0 0,1 120,0" fill="none" stroke-width="10" stroke="#E68E55" stroke-dasharray="90" pathLength="90"
+									stroke-dashoffset="10" filter="url(#blurMe)" />
+								<rect x="0" y="0" width="15" height="20" fill="#E68E55" />
+								<text x="18" y="12" class="medium" fill="white">Goal scored</text>
+
+								<rect x="0" y="30" width="15" height="20" fill="#FADD5C" />
+								<text x="18" y="42" class="medium" fill="white">Goal taken</text>
+
+
+								<path id="average_goal" d="M 300 140
+						a60,60 0 0,0 -120,0" stroke="#FADD5C" fill="none" stroke-width="10" pathLength="90" filter="url(#blurMe)"
+									stroke-dasharray="90" stroke-dashoffset="10" />
+								<path id="average_goal_taken" d="M 180 140
+						a60,60 0 0,1 120,0" fill="none" stroke-width="10" stroke="#E68E55" stroke-dasharray="90" pathLength="90"
+									stroke-dashoffset="10" filter="url(#blurMe)" />
+
+
+								<rect x="180" y="0" width="15" height="20" fill="#E68E55" />
+								<text x="198" y="12" class="medium" fill="white">Avrg goal scored</text>
+
+								<rect x="180" y="30" width="15" height="20" fill="#FADD5C" />
+								<text x="198" y="42" class="medium" fill="white">Avrg goal taken</text>
+
+								<path id="match_won" d="M 460 140
+						a60,60 0 0,0 -120,0" stroke="#FADD5C" fill="none" stroke-width="10" pathLength="90" filter="url(#blurMe)"
+									stroke-dasharray="90" stroke-dashoffset="10" />
+								<path id="match_lose" d="M 340 140
+						a60,60 0 0,1 120,0" fill="none" stroke-width="10" stroke="#E68E55" stroke-dasharray="90" pathLength="90"
+									stroke-dashoffset="10" filter="url(#blurMe)" />
+
+
+								<rect x="340" y="0" width="15" height="20" fill="#E68E55" />
+								<text x="358" y="12" class="medium" fill="white">Match won</text>
+
+								<rect x="340" y="30" width="15" height="20" fill="#FADD5C" />
+								<text x="358" y="42" class="medium" fill="white">Match lost</text>
+
+
+							</svg>
+						</div>
+						<div id="TrustFactorProfile" class="col-3">
+							<div>
+								Trust Factor
+							</div>
+							<div id="wrapperIcon">
+
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div id="profile-friends" class="row justify-content-center">
+					<div id="profile-friends-title">
+						{% if display_add_friend %}
+						<h6>Friends list</h6>
+						{% else %}
+						<h6>{{ user.public_username }}'s friends</h6>
+						{% endif %}
+					</div>
+					{% if display_add_friend %}
+					<form id="add-friends-form" method="post">
+						<div class="profile-logo">
+							<i class="fa-solid fa-user-group"></i>
+						</div>
+						<div class="rounded-form">
+							<input type="text" id="username" name="username" placeholder="Find friends..." autocomplete="username">
+						</div>
+
+						<input class="submit" type="button" value="ADD" onclick="sendData()">
+					</form>
+					<p id="message" class="message">We couldn't find any friends with that name.</p>
+					{% endif %}
+					<div class="w-100"></div>
+
+					<div class="friend-spacer"></div>
+					<div class="w-100"></div>
+					<div id="friend-list-wrapper">
+
+
+						{% for friend in friends_list %}
+
+						<div id='{{ friend.username }}' class="friend-info show-info">
+
+							<img class="friend-profile-img profile-img"
+							src="{{ save_dir}}{{friend.profile_picture_full_name}}" ></img>
+
+							<div id="friend-username" class="margin-left">{{ friend.public_username }}</div>
+							{% if friend.is_playing %}
+							<div id="friend-status" class="margin-left">Playing</div>
+							<i id="friend_color" class="fa-solid fa-circle" style="color: rgb(223, 219, 85)"></i>
+							{% elif friends_list_status|keyvalue:friend.username %}
+							<div id="friend-status" class="margin-left">Online</div>
+							<i class="fa-solid fa-circle" style="color: lightgreen"></i>
+							{% else %}
+							<div id="friend-status" id="friend_color" class="margin-left">Offline</div>
+							<i id="friend_color" class="fa-solid fa-circle" style="color: lightcoral"></i>
+							{% endif %}
+							<div class="friend_info_button_wrapper">
+								{% if display_add_friend %}
+								<button class="remove_friend fa-regular fa-trash-can" id="{{ friend.username }}"onclick=removeFriend(this.id)>
+							</button>
+								{% endif %}
+								<button class="search_button fa-solid fa-magnifying-glass" id="{{ friend.username }}"
+								onclick=searchTop(this.id)></button>
+							</div>
+						</div>
+						{% endfor %}
+					</div>
+				</div>
+
+				<div id="profile-history" class="row justify-content-center">
+					<div id="profile-history-title">
+						<h6>History</h6>
+					</div>
+					<div class="w-100"></div>
+
+					<div class="history-spacer"></div>
+					<div class="w-100"></div>
+					<div id="history-list-wrapper">
+						<div>
+
+							{% for game in games %}
+							<!-- TTT game-->
+							{% if game.date_played %}
+							{% if game.player == user %}
+							<div class="show-info">
+								<a class="hidden_result" style="display:None">{{ game.board }}</a>
+								<div id="game-date">{{ game.date }}</div>
+								<i id="game-logo" class="fa-solid fa-chess-board"></i>
+								{% if game.winner and game.winner == user %}
+								<i class="fas fa-trophy game-issue-icon"></i>
+								{% elif game.winner %}
+								<i class="fas fa-skull-crossbones game-issue-icon"></i>
+								{% else %}
+								<i class="fas fa-grip-lines game-issue-icon"></i>
+								{% endif %}
+								<img class="profile-img game-history-user-img" src="{{ save_dir}}{{user.profile_picture_full_name}}"
+									alt="{{ user.public_username }}'s profile Picture"></img>
+								<div id="game-history-username"> {{user.public_username }}</div>
+
+								<div id="TTTBoardPreview" class="showTTTBoard">
+
+								</div>
+								{% if game.opponent %}
+								<img class="profile-img" src="{{ save_dir}}{{user.profile_picture_full_name}}"
+									alt="{{ user.public_username }}'s profile Picture"></img>
+								<div id="game-history-opponent"> {{ game.opponent.public_username }}</div>
+								{% else %}
+								<img class="profile-img" id="invited" src="{%  static 'images/invited4.png' %}"
+									alt="Invited player's profile Picture"></img>
+								<div id="game-history-opponent">invited</div>
+								{% endif %}
+
+
+							</div>
+							{% endif %}
+							{% else %} <!-- Pong Match-->
+							<div class="show-info">
+								<div id="game-date">{{ game.date_serializer }}</div>
+								<i id="game-logo" class="fa-solid fa-table-tennis-paddle-ball"></i>
+								<!-- Left Match-->
+
+								{% if game.Winner and game.Winner == user %}
+								<i class="fas fa-trophy game-issue-icon"></i>
+								{% else %}
+								<i class="fas fa-skull-crossbones game-issue-icon"></i>
+								{% endif %}
+
+								{% if game.Player1 == user %}
+								<img class="profile-img game-history-user-img"src="{{ save_dir}}{{game.Player1.profile_picture_full_name}}"
+									alt="{{ game.Player1.public_username }}'s profile Picture"></img>
+								<div id="game-history-username"> {{ game.Player1.public_username }}</div>
+								{% else %}
+								<img class="profile-img" src="{{ save_dir}}{{game.Player2.profile_picture_full_name}}"
+									alt="{{ game.Player1.public_username }}'s profile Picture"></img>
+								<div id="game-history-username"> {{ game.Player2.public_username }}</div>
+								{% endif %}
+								<!-- Score-->
+								<div id="game-history-scoreboard">
+									{% if game.Winner and game.Winner == user %}
+									<span id="score">
+										{{ game.winner_score }} - {{ game.loser_score }}
+									</span>
+									{% else %}
+									<span id="score">
+										{{ game.loser_score }} - {{ game.winner_score }}
+									</span>
+									{% endif %}
+								</div>
+								<!-- Right Match-->
+								{% if game.Player1 == user %}
+								<img class="profile-img" src="{{ save_dir}}{{game.Player2.profile_picture_full_name}}"
+									alt="{{ game.Player2.public_username }}'s profile Picture"></img>
+								<div id="game-history-opponent"> {{ game.Player2.public_username }}</div>
+								{% else %}
+								<img class="profile-img" src="{{ save_dir}}{{game.Player1.profile_picture_full_name}}"
+									alt="{{ game.Player1.public_username }}'s profile Picture"></img>
+								<div id="game-history-opponent"> {{ game.Player1.public_username }}</div>
+								{% endif %}
+
+
+
+							</div>
+							{% endif %}
+							<div class="game-spacer"></div>
+							<div class="w-100"></div>
+
+							{% endfor %}
+						</div>
+					</div>
+				</div>
+
+			</div>
+
+		</div>
+	</div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'js/profile.js' %}"></script>
+{% endblock %}

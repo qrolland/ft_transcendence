@@ -1,0 +1,10 @@
+channels==4.0.0
+Django==5.0.2
+djangorestframework==3.14.0
+daphne==4.1.0
+psycopg2-binary==2.9.9
+pyOpenSSL==21.0.0
+crypto==1.4.1
+whitenoise==6.6.0
+Pillow==10.2.0
+prometheus-client==0.20.0

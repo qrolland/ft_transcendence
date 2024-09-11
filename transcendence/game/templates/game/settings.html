@@ -1,0 +1,101 @@
+
+
+{% load static %}
+
+{% block title %}Settings page{% endblock %}
+
+
+{% block content %}
+
+<div id="new_content">
+
+
+    <div id="settings-div">
+		<div class="row justify-content-center">
+			<h1 class="text-center">Settings</h1>
+			<div class="w-100"></div>
+			<div class="spacer"></div>
+			<div class="w-100"></div>
+			<div id="settings-form">
+				<form id="profile-form" class="profile-form" method="post" enctype="multipart/form-data">
+					{% csrf_token %}
+					<div class="stgs-form-input-div">
+						<h3>Change your username</h3>
+						<input type="text" id="username" name="username" class="username-settings-input" placeholder="New username..." maxlength="20">
+						<p id="message" class="message" style="opacity: 0;">Failed to change username.</p>
+					</div>
+					<div class="avatar-default-div">
+						<h3>Select an avatar</h3>
+						<div class="avatar-container">
+							<img id="avatar1" src="{% static 'images/avatar1.png' %}" alt="Avatar 1" onclick="selectAvatar('../../static/images/avatar1.png', this)">
+							<img id="avatar2" src="{% static 'images/avatar2.png' %}" alt="Avatar 2" onclick="selectAvatar('../../static/images/avatar2.png', this)">
+							<img id="avatar3" src="{% static 'images/avatar3.png' %}" alt="Avatar 3" onclick="selectAvatar('../../static/images/avatar3.png', this)">
+							<img id="avatar4" src="{% static 'images/avatar4.png' %}" alt="Avatar 4" onclick="selectAvatar('../../static/images/avatar4.png', this)">
+						</div>
+					</div>
+					<input type="hidden" id="selected-avatar" name="selected-avatar">
+				</form>
+
+				<div class="settings-spacer row">
+					<div class="col-5"></div>
+					<span class="col-2">or</span>
+					<div class="col-5"></div>
+				</div>
+				<input type="file" id="profile_picture" class="profile-input" name="avatar" accept="image/png, image/jpeg" />
+				<button class="my-save-settings" onclick="saveSettings()">Save</button>
+			</div>
+		</div>
+    </div>
+
+
+
+
+
+    <!-- <h1>Settings</h1>
+    <form id="profile-form" class="profile-form" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="profile-form-container">
+            <label>Change your username:</label>
+        </div>
+        <div class="profile-form-container">
+            <div class="profile-logo">
+                <i class="fas fa-user"></i>
+            </div>
+            <div class="rounded-form">
+                    <input type="text" id="username" name="username" placeholder="Enter your new username" autocomplete="username">
+            </div>
+        </div>
+        <p id="message" class="message" style="display : none"></p>
+
+        <div class="profile-form-container">
+            <label>Select an avatar:</label>
+		</div>
+		<div class="profile-form-container">
+			<div class="avatar-container">
+                <img id="avatar1" src="{% static 'images/avatar1.png' %}" alt="Avatar 1" onclick="selectAvatar('../../static/images/avatar1.png', this)">
+                <img id="avatar2" src="{% static 'images/avatar2.png' %}" alt="Avatar 2" onclick="selectAvatar('../../static/images/avatar2.png', this)">
+                <img id="avatar3" src="{% static 'images/avatar3.png' %}" alt="Avatar 3" onclick="selectAvatar('../../static/images/avatar3.png', this)">
+                <img id="avatar4" src="{% static 'images/avatar4.png' %}" alt="Avatar 4" onclick="selectAvatar('../../static/images/avatar4.png', this)">
+            </div>
+		</div>
+		<input type="hidden" id="selected-avatar" name="selected-avatar">
+
+        <div class="profile-form-container">
+                <input class="submit" type="button" value="Save" onclick="sendForm()">
+        </div>
+    </form> -->
+
+	<!-- <div id="upload_avatar">
+		<input type="file" id="profile_picture" name="avatar" accept="image/png, image/jpeg" />
+		<button id="Upload_button" onclick="UploadProfilePicture()">
+			Upload
+		</button>
+	</div> -->
+</div>
+
+
+{% endblock %}
+
+{% block scripts %}
+    <script src="{% static 'js/settings.js' %}"></script>
+{% endblock %}

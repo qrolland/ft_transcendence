@@ -1,0 +1,140 @@
+/* .main-home {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+} */
+
+
+
+/* .bloc{
+	position: relative;
+	width: 50%;
+	height: 30vh;
+	overflow: hidden;
+  } */
+
+  /* #home {
+    max-width: 100%;
+
+	width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+} */
+
+/* #home .row {
+	row-gap: 1vh;
+} */
+#home {
+	height: 100%;
+	position: relative;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	transition: 0.2s;
+}
+
+#home h1 {
+	font-size: 3rem;
+	font-weight: 700;
+}
+
+#home p {
+	font-size: 1.2rem;
+	font-weight: 100;
+}
+
+/* #home-trailer {
+	position: relative;
+	width: 100%;
+	height: 90vh;
+} */
+#home-video{
+	position: absolute;
+	min-width: 100%;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	border: 3px solid transparent;
+	border-radius: 16px;
+	z-index: -6;
+  }
+
+#blur-video {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	z-index: -5;
+	background-color: rgba(0, 0, 0, 0.7);
+	backdrop-filter: blur(6px);
+	transition: 0.2s;
+}
+
+.my-play-now-btn {
+	cursor: pointer;
+	/* width: fit-content; */
+	width: 300px;
+	margin: 16px;
+	background: linear-gradient(135deg, rgb(145, 0, 161) 0%, rgb(46, 0, 194) 100%);
+	border: 3px solid rgb(149, 0, 255);
+	color: white;
+	padding: 15px 32px;
+	font-size: 28px;
+
+	border-radius: 16px;
+	box-shadow: 0 4px 18px rgba(219, 74, 255, 0.295);
+	backdrop-filter: blur(4px);
+	-webkit-backdrop-filter: blur(4px);
+	transition: .2s;
+	/* background-color: blue; */
+  }
+
+  .my-play-now-btn:hover {
+	border-style: inset;
+	box-shadow: 0 4px 4px rgba(219, 74, 255, 0.295);
+  }
+
+  .my-play-now-btn:active {
+	box-shadow: inset 4px 4px 26px rgb(156, 16, 190);
+	border-color: rgb(149, 0, 255);
+	border-style: inset;
+  }
+
+
+.my-watch-trailer-btn {
+	cursor: pointer;
+	/* width: 128px; */
+	/* width: fit-content; */
+	width: 300px;
+	margin: 16px;
+	background-color: rgb(0, 0, 0, 0.5); /* Green */
+	border: 3px solid rgba(149, 0, 255, 0.661);
+	color: white;
+	padding: 15px 32px;
+	font-size: 28px;
+
+	border-radius: 16px;
+	box-shadow: 0 4px 18px rgba(219, 74, 255, 0.295);
+	backdrop-filter: blur(4px);
+	-webkit-backdrop-filter: blur(4px);
+	transition: .2s;
+	/* background-color: blue; */
+  }
+
+  .my-watch-trailer-btn:hover {
+	border-color: rgb(149, 0, 255);
+	background: linear-gradient(135deg, rgb(145, 0, 161) 0%, rgb(46, 0, 194) 100%);
+	box-shadow: 0 4px 12px rgb(0, 0, 0);
+  }
+
+  .my-watch-trailer-btn:active {
+	box-shadow: inset 4px 4px 26px rgb(156, 16, 190);
+	border-color: rgb(149, 0, 255);
+	border-style: inset;
+  }

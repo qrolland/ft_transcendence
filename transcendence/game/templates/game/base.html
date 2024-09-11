@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	{% load static %}
+	{% load env_extra %}
+
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="">
+	<meta name="connexion" content="{% get_env_var 'BASE_URL_HTTPS' %}">
+	<meta name="websocket" content="{% get_env_var 'BASE_URL_WSS' %}">
+	<title>{% block title %}SPA Page{% endblock %}</title>
+	<meta name="description" content="">
+
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <script src="{% static 'js/url-router.js' %}"></script>
+	<script src="{% static 'js/online_check.js' %}"></script>
+	<script src="{% static 'js/search_user.js' %}"></script>
+	<script src="{% static 'js/fetch_img.js' %}"></script>
+
+    <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script> -->
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+	<link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@7.0.0/css/flag-icons.min.css"/>
+	<link rel="stylesheet" href="{% static 'css/base.css' %}">
+	<link rel="stylesheet" href="{% static 'css/utils.css' %}">
+	<link rel="stylesheet" href="{% static 'css/styles.css' %}">
+	<link rel="stylesheet" href="{% static 'css/pong.css' %}">
+	<link rel="stylesheet" href="{% static 'css/loaders.css' %}">
+	<link rel="stylesheet" href="{% static 'css/modal.css' %}">
+	<link rel="stylesheet" href="{% static 'css/game_settings.css' %}">
+	<link rel="stylesheet" href="{% static 'css/games.css' %}">
+	<link rel="stylesheet" href="{% static 'css/tournament.css' %}">
+	<link rel="stylesheet" href="{% static 'css/profile.css' %}">
+	<link rel="stylesheet" href="{% static 'css/navbar.css' %}">
+	<link rel="stylesheet" href="{% static 'css/game_menu.css' %}">
+	<link rel="stylesheet" href="{% static 'css/top.css' %}">
+	<link rel="stylesheet" href="{% static 'css/tv.css' %}">
+	<link rel="stylesheet" href="{% static 'css/home.css' %}">
+	<link rel="stylesheet" href="{% static 'css/settings.css' %}">
+
+	<img src="{% static 'images/map_screen.png' %}" hidden="true">
+</head>
+<body>
+		<!-- Tournament modal -->
+		<div class="modal fade" id="tournamentModal" tabindex="-1" role="dialog" aria-labelledby="tournamentLabel" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered" role="document">
+			  <div class="modal-content">
+				<div class="modal-header">
+					<!-- <i id="modalIcone" class="fa-solid fa-circle-info"></i> -->
+					<i class="fa-solid fa-trophy" style="color: black;"></i>
+					<div style="width: 4px;"></div>
+					<h1 class="modal-title fs-5" id="tournamentModalTitle"></h1>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="tournamentModal.hide();"></button>
+				  </button>
+				</div>
+				<div class="modal-body">
+				  <form>
+					<div id="slot-1" class="form-group">
+					  <label id="slot-1-label" for="slot-1-name" class="col-form-label"></label>
+					  <input type="text" maxlength="30" class="form-control" id="slot-1-input">
+					</div>
+				  </form>
+				</div>
+				<div class="modal-footer">
+				  <!-- <button type="button" class="btn btn-secondary" onclick="tournamentModal.hide();" data-dismiss="modal">Close</button> -->
+				  <button id="tournamentModalActionButton" type="button" onclick="tournamentButtonCreate();" class="btn btn-primary"></button>
+				</div>
+			  </div>
+			</div>
+		  </div>
+
+		<!-- Modal -->
+		<div class="modal fade" id="infoModal" tabindex="-1" data-bs-backdrop="static" aria-labelledby="infoModalLabel" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered">
+				<div class="modal-content">
+					<div class="modal-header">
+						<i id="modalIcone" class="fa-solid fa-circle-info"></i>
+						<div style="width: 4px;"></div>
+						<h1 class="modal-title fs-5" id="infoModalLabel">Titre</h1>
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="infoModal.hide();"></button>
+					</div>
+					<div class="modal-body text-center">
+						<div id="bodyModalContent">
+							<h1 id="info-modal-text">Content</h1>
+						</div>
+						<div class="row">
+							<div id="col-block-1" class="col"></div>
+							<button id="modal-btn-1" type="button" class="btn-lg-close col-4" data-bs-dismiss="modal" onclick="infoModal.hide();">Fermer</button>
+							<div id="col-block-2" class="col-1"></div>
+							<button id="modal-btn-2" type="button" class="btn-lg-close col-4" data-bs-dismiss="modal" onclick="infoModal.hide();">Fermer</button>
+							<div id="col-block-3" class="col"></div>
+						</div>
+					</div>
+					<!-- <div class="modal-footer">
+					</div> -->
+				</div>
+			</div>
+		</div>
+
+		<div class="bg-block block-1"></div>
+		<div class="bg-block block-2"></div>
+		<div class="blur-cover"></div>
+
+		<div id="root" class="main-container">
+			<nav id="main_nav" class="vertical-menu">
+				<div id="selector-box"></div>
+
+				<div class="menu-item n-1 item-active" id="nav-route" onclick="urlRoute('/home')">
+					<i class="fas fa-home"></i>
+					<span>Home</span>
+				</div>
+				<div class="menu-item n-2" id="nav-route-game" onclick="urlRoute('/game')">
+					<i class="fas fa-gamepad"></i>
+					<span>Games</span>
+				</div>
+				<div class="menu-item n-3" id="nav-route" onclick="urlRoute('/tournament')">
+					<i class="fas fa-trophy" style></i>
+					<span>Tournament</span>
+				</div>
+				<div class="menu-item n-4" id="nav-route" onclick="urlRoute('/top')">
+					<i class="fas fa-chart-bar"></i>
+					<span>Top</span>
+				</div>
+				<div class="menu-item n-5" id="nav-route" onclick="urlRoute('/profile')">
+					<i class="fas fa-user"></i>
+					<span>Profile</span>
+				</div>
+				<div class="menu-item n-6" id="nav-route" onclick="urlRoute('/settings')">
+					<i class="fas fa-cog"></i>
+					<span>Settings</span>
+				</div>
+				<div class="menu-item n-7" id="nav-route" onclick="urlRoute('/tv')">
+					<i class="fa-solid fa-tv"></i>
+					<span>TV</span>
+				</div>
+				<div id="deconnexion-button" onclick="urlRoute('/logout')">
+					<i class="fa-solid fa-right-from-bracket"></i>
+					<!-- <span>Logout</span> -->
+				</div>
+
+			</nav>
+
+			<div id="back_nav" class="vertical-menu back-vertical-btn" style="display: none;">
+				<i class="fa-solid fa-chevron-left"></i>
+			</div>
+		<div id="content" class="container">
+            {% block content %}{% endblock %}
+		</div>
+	</div>
+</div>
+    <!-- {% block scripts %}{% endblock %} -->
+	<div id="script_div">
+
+	</div>
+
+	<script type="importmap">
+		{
+			"imports": {
+				"three": "https://unpkg.com/three@0.161.0/build/three.module.js",
+				"three/addons/": "https://unpkg.com/three@0.161.0/examples/jsm/"
+			}
+		}
+	</script>
+	<script type="text/javascript" src="{% static 'js/navbar.js' %}"></script>
+	<script type="text/javascript" src="{% static 'js/modal.js' %}"></script>
+
+
+	<script type="text/javascript" src="{% static 'js/stats.min.js' %}"></script>
+	<!-- <script type="text/javascript" src="{% static 'js/THREE/three.min.js' %}"></script> -->
+	<script type="text/javascript" src="{% static 'js/THREE/THREE.js' %}"></script>
+	<script type="text/javascript" src="{% static 'js/THREE/tween.min.js' %}"></script>
+	<script type="text/javascript" src="{% static 'js/THREE/GLTFLoader.js' %}"></script>
+	<script type="text/javascript" src="{% static 'js/THREE/OrbitControls.js' %}"></script>
+	<script>
+		hideBackNavbar(true);
+		document.getElementById("back_nav").style.display = 'flex';
+		async function getGltfModels(path) {
+			return new Promise((resolve, reject) => {
+				const assetLoader = new GLTFLoader();
+
+				assetLoader.load(path, (gltf) => {
+					const model = gltf.scene;
+					// scene.add(model);
+					resolve(gltf.scene);
+				}, undefined, (error) => {
+					reject(error);
+				});
+			});
+		}
+
+		var hasLoadingModel = 'pending';
+		// 3D models to load
+		var m3D_tribune;
+		var m3D_game_ground;
+		var m3D_transcendence_table;
+		var m3D_p3d_table;
+		// var m3D_player_1;
+		// var m3D_player_2;
+		var m3D_pong_ball;
+		async function init3dModels() {
+			try {
+				m3D_game_ground = await getGltfModels('../static/3d_models/game_ground.gltf');
+				m3D_game_ground.receiveShadow = true;
+				m3D_game_ground.scale.set(5, 5, 5);
+
+				// m3D_player_1 = await getGltfModels('../static/3d_models/player.gltf');
+				// m3D_player_1.children[0].children[0].scale.set(4.2, 0.5, 0.25);
+				// m3D_player_1.children[0].children[1].scale.set(4.2, 0.5, 0.25);
+
+
+				// m3D_player_2 = await getGltfModels('../static/3d_models/player.gltf');
+				// m3D_player_2.children[0].children[0].scale.set(4.2, 0.5, 0.25);
+				// m3D_player_2.children[0].children[1].scale.set(4.2, 0.5, 0.25);
+
+				m3D_pong_ball = await getGltfModels('../static/3d_models/pong_ball.gltf');
+				m3D_pong_ball.scale.set(1, 1, 1);
+				hasLoadingModel = 'success';
+			} catch (error) {
+				hasLoadingModel = 'failed';
+			}
+		}
+
+		init3dModels();
+	</script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+
+
+</body>
+</html>

@@ -1,0 +1,239 @@
+/* CONTENT */
+
+.container {
+	flex: 1;
+	padding: 20px;
+  }
+
+  /* PROFIL */
+/* 
+  .profile-form {
+	background-color: #570080;
+	padding: 30px;
+	width: 70vh;
+	border-radius: 20px;
+	margin-top: 10vh;
+  }
+
+  .profile-form-container {
+	display: flex;
+	align-items: center;
+	margin-bottom: 15px;
+  } */
+
+  /* .profile-logo {
+	background-color: #D700EA;
+	color: #fff;
+	padding: 10px;
+	border-top-left-radius: 10px;
+	border-bottom-left-radius: 10px;
+  } */
+
+  /* .rounded-form {
+	background-color: #fff;
+	border-top-right-radius: 10px;
+	border-bottom-right-radius: 10px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  } */
+
+  /* input, select {
+	flex: 1;
+	height: 44px;
+	border: none;
+	border-radius: 5px;
+	outline: none;
+  } */
+
+  .margin_left {
+	margin-left: 15px;
+  }
+
+
+  /* .avatar-container {
+	display: flex;
+	gap: 10px;
+  }
+
+  .avatar-container img {
+	width: 80px;
+	height: auto;
+  }
+
+  .avatar-container img.selected {
+	border: 4px solid #D700EA;
+  } */
+
+  /*GAME*/
+
+  .flex-center {
+	height: 70vh;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+  }
+
+  .game-choice {
+	display: inline-block;
+	margin: 30px;
+	text-align: center;
+	vertical-align: middle;
+  }
+
+  #waiting-opponent {
+	border: 4px solid #D700EA;
+	background-color: #570080;
+	border-radius: 20px;
+	padding: 20px;
+	margin-inline: 17%;
+	margin-top: 15%;
+	text-align: center;
+	display: none;
+  }
+
+  /*TIC TAC TOE*/
+
+  #tic-tac-toe-board {
+	width: 28%;
+	min-width: 300px;
+	min-height: 300px;
+	margin: auto;
+	border:6px solid #00F0FF;
+	border-radius: 20px;
+	box-shadow: 0 0 0 6px #00F0FF;
+	display: none;
+  }
+
+  #score-message-ttt {
+	display: none;
+	margin: auto;
+	text-align: center;
+	font-size: x-large;
+	margin-bottom: 30px;
+	margin-top: 20px;
+  }
+
+  .button-ttt {
+	height: 20vw;
+	width: auto;
+	cursor: pointer;
+	margin-bottom: 20px;
+  }
+
+  .button-ttt:hover {
+	box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
+	transform: translateY(-2px);
+  }
+
+   .canvas-ttt {
+	display: block;
+	margin: auto;
+  }
+
+  #buttons-canvas-ttt {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+  }
+
+
+  /*Barre de défilement*/
+  /* Pour les navigateurs basés sur WebKit (comme Chrome et Safari) */
+  ::-webkit-scrollbar {
+	width: 5px; /* Largeur de la barre de défilement */
+	height: 5px;
+  }
+
+  ::-webkit-scrollbar-track {
+	background-color: #4c225eb1; /* Couleur de fond de la piste */
+	border-radius: 6px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+	background-color: #df57ebac ; /* Couleur de la poignée de défilement */
+	border-radius: 6px; /* Bord arrondi de la poignée */
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+	background-color: #D700EA; /* Couleur de la poignée de défilement au survol */
+  }
+
+  /*TOP*/
+  /*
+  .top-info {
+	margin-right: 10px;
+	width: 50%;
+	min-width: 310px;
+  }
+
+  .top-info .profile-form {
+	  width: 100%;
+	  margin-top: 2vh;
+	  min-width: 340px;
+  }
+
+  .top-info .show-column {
+	max-height: 70vh;
+  }
+
+  .top-info .fa-gamepad {
+	color: #00F0FF;
+	font-size: small;
+	margin-left: 10px;
+  }
+
+  .top-info .fa-trophy {
+	font-size: small;
+  }
+
+  .top-info .fa-skull-crossbones {
+	font-size: small;
+  }
+  .top-info .fa-grip-lines{
+	  font-size: small;
+
+  } */
+
+
+  #user-username {
+	margin-left: 5px;
+  }
+
+  .margin-small-left {
+	margin-left: 5px;
+  }
+
+  #average_stat{
+	  display: flex;
+  }
+
+  .stat_tooltip
+  {
+	  position: fixed;
+	  display: none;
+	  width: 3vw;
+	  background-color: black;
+	  color: #fff;
+	  text-align: center;
+	  border-radius: 6px;
+	  z-index: 1;
+  }
+
+  #graph_stat{
+	  height: 100%;
+  }
+  #stat{
+	  max-height: 100%;
+	  max-width: 100%;
+	  background-color: red;
+	  display: flex;
+  }
+  @media only screen and (max-width: 800px){
+	  #stat{
+		 display: none
+	   }
+	} -->
+
+
+  #score{
+	  padding-left: 8px;
+  }

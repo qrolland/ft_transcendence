@@ -1,0 +1,137 @@
+.buttons {
+	position: absolute;
+	text-align: center;
+	bottom: 0;
+	width: 100%;
+	margin-bottom: 50px;
+	/* vertical-align: bottom; */
+}
+
+.btn {
+	text-decoration: red;
+}
+
+#left-btn {
+	display: none;
+}
+
+
+
+.card-body{
+	text-align: center;
+}
+
+.canvas-button-ttt .my-btn-outlined{
+	display: none;
+	z-index: 1;
+	border-radius: 20px;
+	top: 80%;
+	font-size: 20px;
+}
+
+.ttt_col{
+	display: flex;
+	align-items: center;
+	vertical-align: auto;
+}
+
+.ttt_card{
+	min-width: 80%;
+	min-height: 50%;
+	background-color: rgba(137, 43, 226, 0);
+}
+
+.child-menu {
+	position: relative;
+	width: 100%;
+	height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.canvas_div_center {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+#pong_canvas {
+    /* margin: 10px auto;
+    display: block;
+    vertical-align: center; */
+	border: 2px solid #7e008ac7;
+	border-radius: 20px;
+}
+
+#game-div {
+	position: absolute;
+}
+
+#score-pong {
+	text-align: center;
+}
+
+#score-pong h1 {
+	display: inline-block;
+	color: white;
+}
+
+#score-pong #player-left {
+	color: red;
+}
+
+#score-pong #player-right {
+	color: blue;
+}
+
+#log-player-info {
+	position: absolute;
+	text-align: center;
+	color: white;
+	font-weight: bold;
+	top: 0;
+	width: 100%;
+	margin-top: 50px;
+	display: none;
+}
+
+.wrapper_loader{
+	display: flex;
+	width: 100%;
+	height: 100%;
+	justify-content: center;
+	vertical-align: middle;
+}
+
+.vert_center{
+	top:40%;
+	position: relative;
+}
+/* HTML: <div class="loader"></div> */
+.loader-ttt {
+	width: 120px;
+	height: 22px;
+	border-radius: 40px;
+	color: #514b82;
+	border: 2px solid;
+	position: relative;
+	overflow: hidden;
+  }
+  .loader-ttt::before {
+	content: "";
+	position: absolute;
+	margin: 2px;
+	width: 14px;
+	top: 0;
+	bottom: 0;
+	left: -20px;
+	border-radius: inherit;
+	background: currentColor;
+	box-shadow: -10px 0 12px 3px currentColor;
+	clip-path: polygon(0 5%, 100% 0,100% 100%,0 95%,-30px 50%);
+	animation: l14 1s infinite linear;
+  }
+  @keyframes l14 {
+	100% {left: calc(100% + 20px)}
+  }
